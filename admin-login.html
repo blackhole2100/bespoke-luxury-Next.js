@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Royal Furniture</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Local CSS for variables and global styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-primary);
+        }
+
+        .auth-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .auth-image {
+            flex: 1;
+            background-image: url('images/banner.png'); /* You might want a different image here */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: none;
+        }
+
+        .auth-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(46,74,61,0.8)); /* Dark green overlay for admin */
+        }
+
+        .auth-image-text {
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            color: white;
+            z-index: 2;
+            max-width: 80%;
+        }
+
+        .auth-image-text h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .auth-image-text p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .auth-form-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: color var(--transition-speed);
+        }
+
+        .back-home:hover {
+            color: var(--accent);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-container h3 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-container h3 i {
+            color: var(--accent);
+        }
+
+        .form-container p.subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(46, 74, 61, 0.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: color var(--transition-speed);
+        }
+
+        .password-toggle:hover {
+            color: var(--accent);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: #2E4A3D; /* Distinctive dark green for admin */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition-speed), transform 0.1s;
+        }
+
+        .btn-submit:hover {
+            background: #1a2c24;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .error-msg {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 900px) {
+            .auth-image {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Image Half -->
+        <div class="auth-image">
+            <div class="auth-image-text">
+                <h1>Store Management</h1>
+                <p>Access the Royal Furniture secure administrative console.</p>
+            </div>
+        </div>
+
+        <!-- Form Half -->
+        <div class="auth-form-wrapper">
+            <a href="index.html" class="back-home">
+                <i class='bx bx-home-alt'></i> Public Site
+            </a>
+
+            <!-- Admin Login Form -->
+            <div class="form-container" id="admin-login-form">
+                <h3><i class='bx bx-shield-quarter'></i> Admin Portal</h3>
+                <p class="subtitle">Enter your credentials to manage the store.</p>
+                
+                <form id="form-admin-login" novalidate onsubmit="return handleAdminLogin(event)">
+                    <div class="input-group">
+                        <label for="admin-username">Username/Email</label>
+                        <input type="text" id="admin-username" placeholder="admin@royalfurniture.com" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="admin-password">Secure Password</label>
+                        <input type="password" id="admin-password" placeholder="••••••••" required>
+                        <i class='bx bx-hide password-toggle' onclick="togglePassword('admin-password', this)"></i>
+                    </div>
+                    
+                    <div class="error-msg" id="admin-login-error"></div>
+                    
+                    <button type="submit" class="btn-submit">Secure Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container  -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: none;" id="authToast">
+        <div style="background: #2E4A3D; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;">
+            <i class='bx bx-check-circle' style="font-size: 1.5rem;"></i>
+            <span id="authToastMessage">Success!</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            
+            // If already logged in as admin, redirect
+            const adminSession = sessionStorage.getItem('adminUser');
+            if(adminSession) {
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bx-hide');
+                icon.classList.add('bx-show');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bx-show');
+                icon.classList.add('bx-hide');
+            }
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('authToast');
+            const msgObj = document.getElementById('authToastMessage');
+            const icon = toast.querySelector('i');
+            const toastBg = toast.querySelector('div');
+            
+            msgObj.textContent = message;
+            
+            if (isError) {
+                toastBg.style.background = '#dc3545';
+                icon.className = 'bx bx-error-circle';
+            } else {
+                toastBg.style.background = '#2E4A3D';
+                icon.className = 'bx bx-check-circle';
+            }
+            
+            toast.style.display = 'block';
+            toast.style.animation = 'fadeIn 0.3s ease-out';
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeIn 0.3s ease-in reverse forwards';
+                setTimeout(() => { toast.style.display = 'none'; }, 300);
+            }, 3000);
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            const errorMsg = document.getElementById('admin-login-error');
+            
+            errorMsg.style.display = 'none';
+
+            // Hardcoded admin credentials for demo purposes
+            const adminEmail = "admin@royalfurniture.com";
+            const adminPassword = "password123"; // In a real app this would be hashed in a DB
+
+            if (email === adminEmail && password === adminPassword) {
+                showToast('Authentication successful. Redirecting...');
+                
+                // Set admin session
+                sessionStorage.setItem('adminUser', JSON.stringify({ email: adminEmail, role: 'admin' }));
+                
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1000);
+            } else {
+                errorMsg.textContent = 'Invalid administrator credentials.';
+                errorMsg.style.display = 'block';
+                document.getElementById('admin-username').classList.add('input-error');
+                document.getElementById('admin-password').classList.add('input-error');
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>

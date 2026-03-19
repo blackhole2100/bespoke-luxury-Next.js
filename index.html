@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Royal Furniture — Luxury handcrafted furniture for the modern home. Explore our exclusive collection of sofas, chairs, and bespoke pieces.">
+    <meta name="keywords" content="luxury furniture, sofas, armchairs, handcrafted, Royal Furniture">
+    <title>Royal Furniture | Luxury Living Since 2010</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts: Cormorant Garamond (ultra-luxury display) + DM Sans (refined body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===================== SCROLL PROGRESS BAR ===================== -->
+    <div id="scroll-progress"><div id="scroll-bar"></div></div>
+
+    <!-- ===================== TOP ANNOUNCEMENT BANNER ===================== -->
+    <div class="announcement-bar" id="announcement-bar">
+        <p>🎉 Limited Time: <strong>Free Delivery</strong> on all orders above ₹50,000 &nbsp;|&nbsp; Use code <strong>ROYAL2025</strong></p>
+        <button class="close-announcement" onclick="document.getElementById('announcement-bar').style.display='none'">
+            <i class='bx bx-x'></i>
+        </button>
+    </div>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header" id="site-header">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="images/logo1.png" alt="Royal Furniture" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <span class="logo-text-fallback" style="display:none;">ROYAL</span>
+                </a>
+            </div>
+
+            <nav class="header-nav" id="header-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">Story</a></li>
+                    <li><a href="#product" class="nav-link">Collection</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="product.html" class="nav-link nav-cta">Shop All</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <!-- Search -->
+                <div class="search-wrapper">
+                    <button class="icon-btn" id="search-toggle" aria-label="Search">
+                        <i class='bx bx-search'></i>
+                    </button>
+                    <div class="search-dropdown" id="search-dropdown">
+                        <input type="text" id="search-input" placeholder="Search products..." autocomplete="off">
+                        <i class='bx bx-search search-icon-inside'></i>
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <button class="icon-btn" id="wishlist-icon" aria-label="Wishlist">
+                    <i class='bx bx-heart'></i>
+                    <span class="badge-dot" id="wishlist-count">0</span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+                    <i class='bx bx-moon'></i>
+                </button>
+
+                <!-- Cart -->
+                <button class="icon-btn cart-btn" id="cart-icon" aria-label="Shopping cart">
+                    <i class='bx bx-shopping-bag'></i>
+                    <span class="badge-dot" id="cart-count">0</span>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="icon-btn mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+                    <i class='bx bx-menu'></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================== CART SIDEBAR ===================== -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-sidebar-header">
+            <h3>Your Cart</h3>
+            <button class="icon-btn" id="cart-close"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="cart-sidebar-body" id="cart-items"></div>
+        <div class="cart-sidebar-footer">
+            <div class="cart-total-row">
+                <span>Subtotal</span>
+                <span class="cart-total-price">₹<span id="total-price">0</span></span>
+            </div>
+            <p class="cart-tax-note">Taxes & delivery calculated at checkout</p>
+            <button class="btn-primary-solid" id="checkout-btn" style="display:none; width:100%;">Proceed to Checkout</button>
+            <a href="product.html" class="btn-secondary-outline" style="display:block; text-align:center; margin-top:12px;">Continue Shopping</a>
+        </div>
+    </aside>
+
+    <!-- ===================== WISHLIST MODAL ===================== -->
+    <div class="modal fade" id="wishlistModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rf-modal">
+                <div class="modal-header rf-modal-header">
+                    <h5>My Wishlist <span id="wishlist-badge"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="wishlist-items">
+                    <p class="empty-state">Your wishlist is empty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="hero" id="home">
+        <div class="hero-slider" id="hero-slider">
+            <div class="hero-slide active" style="background-image: url('images/animation1.jpg')">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-label">New Collection 2025</span>
+                    <h1 class="hero-title">Where <em>Luxury</em><br>Meets Living</h1>
+                    <p class="hero-subtitle">Handcrafted furniture designed for the discerning home.</p>
+                    <div class="hero-actions">
+                        <a href="#product" class="btn-primary-solid">Explore Collection</a>
+                        <a href="#about" class="btn-ghost">Our Story</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image: url('images/animation2.jpg')">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-label">Exclusive Designs</span>
+                    <h1 class="hero-title">Crafted for<br><em>Timeless</em> Style</h1>
+                    <p class="hero-subtitle">Each piece tells a story of artisanal mastery.</p>
+                    <div class="hero-actions">
+                        <a href="#product" class="btn-primary-solid">Shop Now</a>
+                        <a href="product.html" class="btn-ghost">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image: url('images/animation4.jpg')">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-label">Up to 50% Off</span>
+                    <h1 class="hero-title">Seasonal<br><em>Grand Sale</em></h1>
+                    <p class="hero-subtitle">Limited time deals on our most coveted pieces.</p>
+                    <div class="hero-actions">
+                        <a href="#sale-section" class="btn-primary-solid">Grab the Deal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Controls -->
+        <button class="hero-nav prev" id="hero-prev" aria-label="Previous slide"><i class='bx bx-chevron-left'></i></button>
+        <button class="hero-nav next" id="hero-next" aria-label="Next slide"><i class='bx bx-chevron-right'></i></button>
+
+        <!-- Slide Indicators -->
+        <div class="hero-indicators">
+            <button class="indicator active" data-index="0"></button>
+            <button class="indicator" data-index="1"></button>
+            <button class="indicator" data-index="2"></button>
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="scroll-cue">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ===================== TRUST BADGES ===================== -->
+    <section class="trust-section reveal">
+        <div class="trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="trust-text">
+                    <h4>Free Delivery</h4>
+                    <p>On orders over ₹50,000</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-headset"></i></div>
+                <div class="trust-text">
+                    <h4>24/7 Support</h4>
+                    <p>Always here to help</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-rotate-left"></i></div>
+                <div class="trust-text">
+                    <h4>30-Day Returns</h4>
+                    <p>Hassle-free policy</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="trust-text">
+                    <h4>Secure Checkout</h4>
+                    <p>100% protected payments</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon"><i class="fa-solid fa-leaf"></i></div>
+                <div class="trust-text">
+                    <h4>Eco-Friendly</h4>
+                    <p>Sustainable materials</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT SECTION ===================== -->
+    <section class="about-section reveal" id="about">
+        <div class="about-media">
+            <img src="images/about-img.png" alt="About Royal Furniture" class="about-img-main">
+            <div class="about-stat-card">
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Years of Craft</div>
+            </div>
+        </div>
+        <div class="about-content">
+            <span class="section-label">Our Heritage</span>
+            <h2 class="section-heading">A Legacy of <em>Uncompromising</em> Quality</h2>
+            <p>Founded in 2010 by <strong>John Doe & Emily Smith</strong>, Royal Furniture began as a small workshop in New York City with a singular vision — to create beautiful, high-quality furniture that marries traditional craftsmanship with modern design.</p>
+            <p>Every piece we create is a testament to our commitment: sourcing only eco-certified materials, employing artisans with generations of expertise, and ensuring that each item exceeds our exacting standards of quality.</p>
+
+            <div class="about-stats">
+                <div class="mini-stat">
+                    <span class="mini-stat-num" data-target="12000">0</span><span>+</span>
+                    <span class="mini-stat-label">Happy Clients</span>
+                </div>
+                <div class="mini-stat">
+                    <span class="mini-stat-num" data-target="250">0</span><span>+</span>
+                    <span class="mini-stat-label">Unique Designs</span>
+                </div>
+                <div class="mini-stat">
+                    <span class="mini-stat-num" data-target="18">0</span><span>+</span>
+                    <span class="mini-stat-label">Design Awards</span>
+                </div>
+            </div>
+
+            <a href="#product" class="btn-primary-solid">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- ===================== PRODUCT SECTION ===================== -->
+    <section class="product-section" id="product">
+        <div class="section-header reveal">
+            <span class="section-label">Curated Picks</span>
+            <h2 class="section-heading">Our Signature <em>Collection</em></h2>
+            <p class="section-subtext">Individually crafted. Endlessly admired. Built to last generations.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs reveal">
+            <button class="filter-tab active" data-filter="all">All Pieces</button>
+            <button class="filter-tab" data-filter="sofa">Sofas</button>
+            <button class="filter-tab" data-filter="chair">Chairs</button>
+            <button class="filter-tab" data-filter="sale">On Sale</button>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Product cards injected by JS -->
+        </div>
+
+        <div class="section-cta reveal">
+            <a href="product.html" class="btn-primary-solid">View Full Collection <i class='bx bx-arrow-back bx-rotate-180'></i></a>
+        </div>
+    </section>
+
+    <!-- ===================== PROMOTIONAL BANNER ===================== -->
+    <section class="promo-banner" id="sale-section">
+        <div class="promo-content reveal">
+            <span class="promo-tag">Limited Time Offer</span>
+            <h2>Up to <em>50% Off</em> <br>This Week Only</h2>
+            <p>Our biggest sale of the year. Don't let these deals slip away.</p>
+            <div class="promo-countdown" id="countdown">
+                <div class="countdown-unit"><span id="cd-hours">00</span><small>Hours</small></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-unit"><span id="cd-mins">00</span><small>Mins</small></div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-unit"><span id="cd-secs">00</span><small>Secs</small></div>
+            </div>
+            <a href="product.html" class="btn-primary-solid">Shop Sale Items</a>
+        </div>
+    </section>
+
+    <!-- ===================== GALLERY SECTION ===================== -->
+    <section class="gallery-section reveal" id="gallery">
+        <div class="section-header">
+            <span class="section-label">Spaces We've Transformed</span>
+            <h2 class="section-heading">Design <em>Gallery</em></h2>
+        </div>
+        <div class="gallery-masonry">
+            <div class="gallery-item tall reveal">
+                <img src="images/g1.png" alt="Gallery 1" loading="lazy">
+                <div class="gallery-item-overlay"><span>Explore →</span></div>
+            </div>
+            <div class="gallery-item reveal" style="animation-delay: 0.1s">
+                <img src="images/g2.png" alt="Gallery 2" loading="lazy">
+                <div class="gallery-item-overlay"><span>Explore →</span></div>
+            </div>
+            <div class="gallery-item reveal" style="animation-delay: 0.2s">
+                <img src="images/g3.png" alt="Gallery 3" loading="lazy">
+                <div class="gallery-item-overlay"><span>Explore →</span></div>
+            </div>
+            <div class="gallery-item tall reveal" style="animation-delay: 0.15s">
+                <img src="images/animation2.jpg" alt="Gallery 4" loading="lazy">
+                <div class="gallery-item-overlay"><span>Explore →</span></div>
+            </div>
+            <div class="gallery-item reveal" style="animation-delay: 0.25s">
+                <img src="images/animation4.jpg" alt="Gallery 5" loading="lazy">
+                <div class="gallery-item-overlay"><span>Explore →</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section class="reviews-section reveal" id="reviews">
+        <div class="section-header">
+            <span class="section-label">Client Stories</span>
+            <h2 class="section-heading">What Our Clients <em>Say</em></h2>
+        </div>
+
+        <div class="reviews-track-wrapper">
+            <div class="reviews-track" id="reviews-track">
+                <!-- Review cards -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote>"Amazing quality and great craftsmanship! The sofa I purchased exceeded my expectations in every way. Highly recommended."</blockquote>
+                    <div class="reviewer">
+                        <img src="images/pic-1.png" alt="Rahul Sharma" onerror="this.src='https://ui-avatars.com/api/?name=Rahul+Sharma&background=C8A97E&color=fff'">
+                        <div>
+                            <strong>Rahul Sharma</strong>
+                            <span>Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote>"The furniture is stylish, comfortable, and exquisitely made. Customer service was excellent and delivery was right on time."</blockquote>
+                    <div class="reviewer">
+                        <img src="images/pic-2.png" alt="Sarah Johnson" onerror="this.src='https://ui-avatars.com/api/?name=Sarah+Johnson&background=C8A97E&color=fff'">
+                        <div>
+                            <strong>Sarah Johnson</strong>
+                            <span>Delhi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★½</div>
+                    <blockquote>"Best purchase ever! The wooden chair is elegant, sturdy, and absolutely beautiful. Will definitely be ordering again."</blockquote>
+                    <div class="reviewer">
+                        <img src="images/pic-3.png" alt="Amit Verma" onerror="this.src='https://ui-avatars.com/api/?name=Amit+Verma&background=C8A97E&color=fff'">
+                        <div>
+                            <strong>Amit Verma</strong>
+                            <span>Bangalore</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote>"Royal Furniture transformed my living room entirely. The attention to detail in each piece is simply unmatched."</blockquote>
+                    <div class="reviewer">
+                        <img src="images/pic-1.png" alt="Priya Nair" onerror="this.src='https://ui-avatars.com/api/?name=Priya+Nair&background=C8A97E&color=fff'">
+                        <div>
+                            <strong>Priya Nair</strong>
+                            <span>Ahmedabad</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="review-nav prev" id="review-prev"><i class='bx bx-chevron-left'></i></button>
+            <button class="review-nav next" id="review-next"><i class='bx bx-chevron-right'></i></button>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT SECTION ===================== -->
+    <section class="contact-section reveal" id="contact">
+        <div class="contact-info">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-heading">Let's Talk <em>Furniture</em></h2>
+            <p>Have a question or a custom request? Our design consultants are here to help you create the perfect space.</p>
+
+            <div class="contact-details">
+                <a href="tel:+919825349583" class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <span class="detail-label">Phone</span>
+                        <span class="detail-value">+91 98253 49583</span>
+                    </div>
+                </a>
+                <a href="mailto:info@royalfurniture.com" class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <span class="detail-label">Email</span>
+                        <span class="detail-value">info@royalfurniture.com</span>
+                    </div>
+                </a>
+                <div class="contact-detail-item">
+                    <div class="contact-detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <span class="detail-label">Showroom</span>
+                        <span class="detail-value">Gujarat, India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <form id="contact-form" novalidate>
+                <div class="form-row">
+                    <div class="rf-input-group">
+                        <label for="c-name">Full Name</label>
+                        <input type="text" id="c-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="rf-input-group">
+                        <label for="c-phone">Phone Number</label>
+                        <input type="tel" id="c-phone" placeholder="+91 98765 43210" required>
+                    </div>
+                </div>
+                <div class="rf-input-group">
+                    <label for="c-email">Email Address</label>
+                    <input type="email" id="c-email" placeholder="john@example.com" required>
+                </div>
+                <div class="rf-input-group">
+                    <label for="c-subject">Subject</label>
+                    <select id="c-subject">
+                        <option value="">Select a topic...</option>
+                        <option>Product Inquiry</option>
+                        <option>Custom Order</option>
+                        <option>Delivery & Returns</option>
+                        <option>General</option>
+                    </select>
+                </div>
+                <div class="rf-input-group">
+                    <label for="c-message">Message</label>
+                    <textarea id="c-message" rows="5" placeholder="Tell us about your dream space..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary-solid" style="width:100%;">Send Message <i class='bx bx-send'></i></button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Royal Furniture" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <span class="logo-text-fallback" style="display:none;">ROYAL FURNITURE</span>
+                </a>
+                <p>Creating extraordinary living spaces through the art of exceptional furniture. Where every piece is a masterpiece.</p>
+                <div class="social-links">
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://pinterest.com" target="_blank" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-nav-group">
+                <h5>Explore</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#product">Collection</a></li>
+                    <li><a href="product.html">Shop All</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-group">
+                <h5>Support</h5>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Return & Exchange</a></li>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-group">
+                <h5>Newsletter</h5>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Get exclusive offers and design inspiration delivered to your inbox.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="your@email.com">
+                    <button type="button"><i class='bx bx-send'></i></button>
+                </div>
+                <div class="payment-badges">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <i class="fa-brands fa-google-pay"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Royal Furniture. All Rights Reserved. Designed with ♥ in India.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Sitemap</a>
+                <a href="admin-login.html" class="admin-link" style="opacity: 0.5;">Admin</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== BACK TO TOP ===================== -->
+    <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class='bx bx-chevron-up'></i>
+    </a>
+
+    <!-- ===================== TOAST NOTIFICATION ===================== -->
+    <div class="toast-wrapper" id="toast-wrapper">
+        <div class="rf-toast" id="rf-toast">
+            <i class='bx bx-check-circle toast-icon'></i>
+            <span id="toast-message">Item added to cart.</span>
+            <button onclick="document.getElementById('rf-toast').classList.remove('show')"><i class='bx bx-x'></i></button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="javascript.js"></script>
+</body>
+</html>
