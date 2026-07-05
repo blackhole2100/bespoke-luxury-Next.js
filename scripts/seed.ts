@@ -5,154 +5,153 @@ import bcrypt from 'bcryptjs';
 
 const SEED_PRODUCTS = [
   {
-    name: 'Grey Fabric Sofa',
+    name: 'Aurelia Luxe Curved Bouclé Sofa',
     category: 'sofa',
-    price: 65000,
+    price: 185000,
     originalPrice: null,
     image: '/images/p1.png',
-    description: 'Modern and cozy fabric sofa for stylish living rooms.',
+    description: 'A masterpiece of curved modern design, upholstered in premium Belgian textured bouclé fabric with a high-density down-fill core.',
     isNew: true,
     badge: 'new',
-    stock: 12,
-    ratings: { average: 5, count: 128 }
+    stock: 8,
+    ratings: { average: 4.9, count: 128 }
   },
   {
-    name: 'Royal Blue Velvet Armchair',
+    name: 'Marceau Sapphire Velvet Lounge Chair',
     category: 'chair',
-    price: 42000,
+    price: 58000,
     originalPrice: null,
     image: '/images/p2.png',
-    description: 'Luxurious velvet armchair that adds elegance to any space.',
+    description: 'A mid-century modern statement armchair wrapped in Italian sapphire velvet, framed by hand-finished American Walnut accents.',
     isNew: false,
     badge: null,
-    stock: 8,
-    ratings: { average: 5, count: 94 }
+    stock: 12,
+    ratings: { average: 4.8, count: 94 }
   },
   {
-    name: 'Premium Brown Leather Loveseat',
+    name: 'Venezia Chestnut Aniline Leather Loveseat',
     category: 'sofa',
-    price: 78000,
+    price: 245000,
     originalPrice: null,
     image: '/images/p3.png',
-    description: 'Elegant leather loveseat for a classic, timeless touch.',
-    isNew: false,
-    badge: null,
-    stock: 6,
-    ratings: { average: 4.5, count: 73 }
-  },
-  {
-    name: 'Gold Accent Lounge Chair',
-    category: 'chair',
-    price: 50000,
-    originalPrice: null,
-    image: '/images/p4.png',
-    description: 'Stylish gold-accented chair for a luxurious interior.',
-    isNew: true,
-    badge: 'new',
-    stock: 15,
-    ratings: { average: 5, count: 112 }
-  },
-  {
-    name: 'Silver Metallic Armchair',
-    category: 'chair',
-    price: 48000,
-    originalPrice: null,
-    image: '/images/p5.png',
-    description: 'Modern sleek silver chair to elevate your decor.',
-    isNew: false,
-    badge: null,
-    stock: 10,
-    ratings: { average: 4.5, count: 87 }
-  },
-  {
-    name: 'Luxury White Sectional Sofa',
-    category: 'sofa',
-    price: 95000,
-    originalPrice: null,
-    image: '/images/p6.png',
-    description: 'Spacious and elegant white sofa for ultimate comfort.',
+    description: 'Upholstered in full-grain, oil-waxed Tuscan aniline leather that develops a rich, unique patina over years of use.',
     isNew: false,
     badge: null,
     stock: 5,
-    ratings: { average: 5, count: 201 }
+    ratings: { average: 4.9, count: 73 }
   },
   {
-    name: 'Beautiful White Sofa with Pillow',
+    name: 'D’Or Brass Minimalist Lounge Chair',
+    category: 'chair',
+    price: 85000,
+    originalPrice: null,
+    image: '/images/p4.png',
+    description: 'A striking accent chair featuring brushed-gold brass structural framing and thick, high-density cotton canvas cushions.',
+    isNew: true,
+    badge: 'new',
+    stock: 10,
+    ratings: { average: 5.0, count: 112 }
+  },
+  {
+    name: 'Verona Chrome-Plated Club Chair',
+    category: 'chair',
+    price: 72000,
+    originalPrice: null,
+    image: '/images/p5.png',
+    description: 'An industrial luxury club chair utilizing bent steel chrome pipes and premium black matte grain leather cushioning.',
+    isNew: false,
+    badge: null,
+    stock: 6,
+    ratings: { average: 4.7, count: 87 }
+  },
+  {
+    name: 'Seraphina Modular Linen Sectional',
     category: 'sofa',
-    price: 40000,
-    originalPrice: 80000,
+    price: 320000,
+    originalPrice: null,
+    image: '/images/p6.png',
+    description: 'Deep-seated modular lounge configuration upholstered in stain-resistant heavy linen, customizable to fit any architectural layout.',
+    isNew: false,
+    badge: null,
+    stock: 4,
+    ratings: { average: 4.9, count: 201 }
+  },
+  {
+    name: 'Monceau Luxe Linen Sofa with Pillows',
+    category: 'sofa',
+    price: 115000,
+    originalPrice: 230000,
     image: '/images/p9.png',
-    description: 'Elegant white sofa with soft pillows for extra relaxation.',
+    description: 'An elegant chalk-white slipcovered sofa in premium linen-blend, featuring down-blend cushions for deep, relaxed comfort.',
     isNew: false,
     badge: 'sale',
     stock: 14,
-    ratings: { average: 5, count: 155 }
+    ratings: { average: 4.8, count: 155 }
   },
   {
-    name: 'Special Wooden Shoe Case',
+    name: 'Toscana Walnut Entryway Credenza',
     category: 'other',
-    price: 15000,
-    originalPrice: 30000,
+    price: 95000,
+    originalPrice: 190000,
     image: '/images/p10.png',
-    description: 'Stylish wooden shoe rack to keep footwear organized.',
+    description: 'Artisanal sideboard crafted from solid American black walnut. Features soft-close sliding doors and adjustable internal shelving.',
     isNew: false,
     badge: 'sale',
-    stock: 22,
-    ratings: { average: 4.5, count: 62 }
+    stock: 15,
+    ratings: { average: 4.9, count: 62 }
   },
   {
-    name: 'Circular Wooden Chair with Pillow',
+    name: 'Sienna Curved Oak Accent Chair',
     category: 'chair',
-    price: 22500,
-    originalPrice: 45000,
+    price: 45000,
+    originalPrice: 90000,
     image: '/images/p11.png',
-    description: 'Unique circular wooden chair with a comfortable pillow.',
+    description: 'Hand-shaped solid white oak armchair with a sculpted circular seat and a premium organic wool boucle accent cushion.',
     isNew: false,
     badge: 'sale',
     stock: 9,
-    ratings: { average: 5, count: 89 }
+    ratings: { average: 5.0, count: 89 }
   },
   {
-    name: 'Contemporary Yellow Accent Chair',
+    name: 'Saffron Velvet Occasional Lounge Chair',
     category: 'chair',
-    price: 41000,
+    price: 68000,
     originalPrice: null,
     image: '/images/p8.png',
-    description: 'Bright modern yellow chair for a pop of colour.',
+    description: 'Bring warm elegance to your studio with this occasional chair upholstered in high-durability saffron-yellow velvet.',
     isNew: true,
     badge: 'new',
     stock: 7,
-    ratings: { average: 5, count: 103 }
+    ratings: { average: 4.8, count: 103 }
   },
   {
-    name: 'Plush Purple Lounge Chair',
+    name: 'Amiens Plum Velvet Wingback Chair',
     category: 'chair',
-    price: 19000,
-    originalPrice: 38000,
+    price: 39000,
+    originalPrice: 78000,
     image: '/images/p7.png',
-    description: 'Elegant stylish purple lounge chair, perfect for relaxation.',
+    description: 'A tall-back statement reading chair upholstered in rich plum-colored velvet, featuring turned ash wood front legs.',
     isNew: false,
     badge: 'sale',
     stock: 11,
-    ratings: { average: 4.5, count: 76 }
+    ratings: { average: 4.6, count: 76 }
   }
 ];
 
 async function seed() {
   try {
     console.log('Connecting to database...');
-    // Ensure MONGODB_URI is set for scripting or fallback
     process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/royal-furniture';
     await dbConnect();
     
-    // 1. Seed Products
+    // Seed Products
     console.log('Clearing existing products...');
     await Product.deleteMany({});
-    console.log(`Seeding ${SEED_PRODUCTS.length} products...`);
+    console.log(`Seeding ${SEED_PRODUCTS.length} premium products...`);
     await Product.insertMany(SEED_PRODUCTS);
-    console.log('Products seeded successfully.');
+    console.log('Premium products seeded successfully.');
     
-    // 2. Seed Admin User
+    // Seed Admin User
     const adminEmail = 'admin@royalfurniture.com';
     console.log(`Checking for admin user: ${adminEmail}...`);
     await User.deleteMany({ email: adminEmail });
@@ -161,7 +160,7 @@ async function seed() {
     const hashedPassword = await bcrypt.hash('password123', salt);
     
     await User.create({
-      name: 'Royal Admin',
+      name: 'Arthur Rousseau',
       email: adminEmail,
       password: hashedPassword,
       role: 'admin',

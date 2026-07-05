@@ -233,8 +233,8 @@ export default function Home() {
         <div className="about-content" ref={clientsStat.elementRef as React.RefObject<HTMLDivElement>}>
           <span className="section-label">Our Heritage</span>
           <h2 className="section-heading">A Legacy of <em>Uncompromising</em> Quality</h2>
-          <p>Founded in 2010 by <strong>John Doe & Emily Smith</strong>, Royal Furniture began as a small workshop in New York City with a singular vision — to create beautiful, high-quality furniture that marries traditional craftsmanship with modern design.</p>
-          <p>Every piece we create is a testament to our commitment: sourcing only eco-certified materials, employing artisans with generations of expertise, and ensuring that each item exceeds our exacting standards of quality.</p>
+          <p>Founded in 2010 by <strong>Arthur Rousseau & Vivienne Rousseau</strong>, Royal Furniture began as a boutique design workshop in SOHO, New York City, with a singular vision — to create beautiful, high-quality furniture that marries traditional European joinery with luxury modern minimalism.</p>
+          <p>Every piece we create is a testament to our commitment: sourcing only certified sustainable timbers, employing master artisans with generations of expertise, and ensuring that each custom piece exceeds our exacting standards of structural elegance.</p>
 
           <div className="about-stats">
             <div className="mini-stat">
@@ -374,25 +374,25 @@ export default function Home() {
           <p>Have a question or a custom request? Our design consultants are here to help you create the perfect space.</p>
 
           <div className="contact-details">
-            <a href="tel:+919825349583" className="contact-detail-item">
+            <a href="tel:+12125558934" className="contact-detail-item">
               <div className="contact-detail-icon"><i className="fa-solid fa-phone"></i></div>
               <div>
                 <span className="detail-label">Phone</span>
-                <span className="detail-value">+91 98253 49583</span>
+                <span className="detail-value">+1 (212) 555-8934</span>
               </div>
             </a>
-            <a href="mailto:info@royalfurniture.com" className="contact-detail-item">
+            <a href="mailto:concierge@royalfurniture.com" className="contact-detail-item">
               <div className="contact-detail-icon"><i className="fa-solid fa-envelope"></i></div>
               <div>
                 <span className="detail-label">Email</span>
-                <span className="detail-value">info@royalfurniture.com</span>
+                <span className="detail-value">concierge@royalfurniture.com</span>
               </div>
             </a>
             <div className="contact-detail-item">
               <div className="contact-detail-icon"><i className="fa-solid fa-location-dot"></i></div>
               <div>
-                <span className="detail-label">Showroom</span>
-                <span className="detail-value">Gujarat, India</span>
+                <span className="detail-label">Design Studio</span>
+                <span className="detail-value">452 West Broadway, SOHO, NY 10012</span>
               </div>
             </div>
           </div>

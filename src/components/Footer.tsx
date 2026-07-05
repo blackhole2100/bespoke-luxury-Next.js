@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Royal Furniture. All Rights Reserved. Designed with ♥ in India.</p>
+        <p>&copy; {new Date().getFullYear()} Royal Furniture Co. All Rights Reserved.</p>
         <div className="footer-legal">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
