@@ -58,10 +58,10 @@ export const Footer: React.FC = () => {
         <div className="footer-nav-group">
           <h5>Support</h5>
           <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping Policy</a></li>
-            <li><a href="#">Return & Exchange</a></li>
-            <li><a href="#">Warranty</a></li>
+            <li><Link href="/faq">FAQ</Link></li>
+            <li><Link href="/shipping">Shipping Policy</Link></li>
+            <li><Link href="/returns">Return & Exchange</Link></li>
+            <li><Link href="/warranty">Warranty</Link></li>
             <li><Link href="/#contact">Contact Us</Link></li>
           </ul>
         </div>
