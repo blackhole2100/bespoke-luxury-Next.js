@@ -6,16 +6,15 @@ import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { Product, Order, User } from '@/types';
 
-const formatINR = (amount: number) => {
-  return '₹' + amount.toLocaleString('en-IN');
-};
+
+
 
 export default function AdminDashboardPage() {
   const router = useRouter();
-  const { user, loading, logout, showToast } = useApp();
+  const { user, loading, logout, showToast, formatPrice } = useApp();
   
   // Dashboard Navigation State
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'orders' | 'users'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'orders' | 'users' | 'consultations'>('dashboard');
 
   // Stats State
   const [stats, setStats] = useState({
@@ -30,6 +29,8 @@ export default function AdminDashboardPage() {
   const [dbProducts, setDbProducts] = useState<Product[]>([]);
   const [dbOrders, setDbOrders] = useState<Order[]>([]);
   const [dbUsers, setDbUsers] = useState<User[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [dbBookings, setDbBookings] = useState<any[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
 
   // New Product Modal Form States
@@ -82,6 +83,13 @@ export default function AdminDashboardPage() {
       const userData = await userRes.json();
       if (userData.success) {
         setUsersList(userData.users);
+      }
+
+      // Fetch bookings list
+      const bookingRes = await fetch('/api/bookings');
+      const bookingData = await bookingRes.json();
+      if (bookingData.success) {
+        setDbBookings(bookingData.bookings);
       }
 
     } catch (err) {
@@ -320,6 +328,9 @@ export default function AdminDashboardPage() {
         <div className={`admin-nav-link ${activeTab === 'users' ? 'active' : ''}`} onClick={() => setActiveTab('users')}>
           <i className="bx bx-group"></i> Users
         </div>
+        <div className={`admin-nav-link ${activeTab === 'consultations' ? 'active' : ''}`} onClick={() => setActiveTab('consultations')}>
+          <i className="bx bx-calendar-check"></i> Consultations
+        </div>
         
         <div className="admin-nav-link" style={{ marginTop: 'auto', position: 'absolute', bottom: '20px', width: '100%' }} onClick={logout}>
           <i className="bx bx-log-out"></i> Logout
@@ -334,6 +345,7 @@ export default function AdminDashboardPage() {
             {activeTab === 'products' && 'Product Management'}
             {activeTab === 'orders' && 'Order History'}
             {activeTab === 'users' && 'User Base'}
+            {activeTab === 'consultations' && 'Design Consultations'}
           </h2>
           <div>
             <span className="badge bg-success" style={{ padding: '8px 12px', fontSize: '0.8rem' }}>Admin Secure Session</span>
@@ -355,7 +367,7 @@ export default function AdminDashboardPage() {
                     <div className="admin-stat-icon"><i className="bx bx-rupee"></i></div>
                     <div className="stat-details">
                       <h4 style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Total Revenue</h4>
-                      <h2 style={{ margin: '5px 0 0', fontSize: '1.8rem', fontWeight: 600 }}>{formatINR(stats.totalRevenue)}</h2>
+                      <h2 style={{ margin: '5px 0 0', fontSize: '1.8rem', fontWeight: 600 }}>{formatPrice(stats.totalRevenue)}</h2>
                     </div>
                   </div>
                   <div className="admin-stat-card">
@@ -395,7 +407,7 @@ export default function AdminDashboardPage() {
                             <tr key={order._id} style={{ borderBottom: '1px solid var(--border)' }}>
                               <td><code style={{ fontSize: '0.8rem' }}>{order._id}</code></td>
                               <td>{typeof order.user === 'object' ? order.user?.name : 'Guest User'}</td>
-                              <td>{formatINR(order.totalAmount)}</td>
+                              <td>{formatPrice(order.totalAmount)}</td>
                               <td>
                                 <span className={`badge ${
                                   order.status === 'Delivered' ? 'bg-success' : 
@@ -452,7 +464,7 @@ export default function AdminDashboardPage() {
                               {prod.stock ?? 20}
                             </span>
                           </td>
-                          <td>{formatINR(prod.price)}</td>
+                          <td>{formatPrice(prod.price)}</td>
                           <td>
                             <button className="btn btn-outline-danger btn-sm" onClick={() => handleDeleteProduct(prod._id!)} aria-label="Delete product">
                               <i className="bx bx-trash" style={{ fontSize: '1.1rem' }}></i>
@@ -502,7 +514,7 @@ export default function AdminDashboardPage() {
                                 ))}
                               </ul>
                             </td>
-                            <td><strong>{formatINR(order.totalAmount)}</strong></td>
+                            <td><strong>{formatPrice(order.totalAmount)}</strong></td>
                             <td style={{ fontSize: '0.85rem' }}>
                               {order.shippingAddress.addressLine}, {order.shippingAddress.city} - {order.shippingAddress.zipCode}
                               <br /><span style={{ color: 'var(--text-secondary)' }}>Phone: {order.shippingAddress.phone}</span>
@@ -563,6 +575,82 @@ export default function AdminDashboardPage() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            )}
+
+            {/* CONSULTATIONS SECTION */}
+            {activeTab === 'consultations' && (
+              <div className="admin-content-section">
+                <h4 style={{ marginBottom: '1.5rem', fontFamily: 'var(--font-heading)', fontSize: '1.4rem', borderBottom: '1px solid var(--border)', paddingBottom: '15px' }}>
+                  Scheduled Design Consultations
+                </h4>
+                {dbBookings.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-secondary)' }}>
+                    <i className="bx bx-calendar" style={{ fontSize: '3rem', marginBottom: '1rem', display: 'block' }}></i>
+                    <p>No consultation bookings received yet.</p>
+                  </div>
+                ) : (
+                  <div className="table-responsive">
+                    <table className="table table-hover" style={{ color: 'var(--text-primary)' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--border)', color: 'var(--text-secondary)' }}>
+                          <th>Client</th>
+                          <th>Email</th>
+                          <th>Service</th>
+                          <th>Date &amp; Time</th>
+                          <th>Notes</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dbBookings.map((b) => (
+                          <tr key={b._id} style={{ borderBottom: '1px solid var(--border)', verticalAlign: 'middle' }}>
+                            <td><strong>{b.name}</strong><br /><span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{b.phone}</span></td>
+                            <td style={{ fontSize: '0.85rem' }}>{b.email}</td>
+                            <td>
+                              <span className="badge" style={{ background: 'var(--accent)', padding: '4px 10px', textTransform: 'capitalize' }}>
+                                {b.service?.replace('-', ' ')}
+                              </span>
+                            </td>
+                            <td style={{ fontSize: '0.85rem' }}>
+                              {b.date} &nbsp;·&nbsp; {b.time}
+                            </td>
+                            <td style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', maxWidth: '180px' }}>
+                              {b.notes || '—'}
+                            </td>
+                            <td>
+                              <select
+                                className="form-select form-select-sm"
+                                value={b.status}
+                                onChange={async (e) => {
+                                  const res = await fetch(`/api/bookings/${b._id}`, {
+                                    method: 'PUT',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ status: e.target.value }),
+                                  });
+                                  const data = await res.json();
+                                  if (data.success) {
+                                    showToast(`Booking status updated to "${e.target.value}"`);
+                                    setDbBookings((prev) => prev.map((item) =>
+                                      item._id === b._id ? { ...item, status: e.target.value } : item
+                                    ));
+                                  } else {
+                                    showToast('Failed to update booking status.', true);
+                                  }
+                                }}
+                                style={{ width: '130px', fontSize: '0.85rem' }}
+                              >
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                              </select>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             )}
           </>

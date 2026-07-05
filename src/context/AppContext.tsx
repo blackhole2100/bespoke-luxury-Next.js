@@ -1,7 +1,20 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { User, Product, CartItem, WishlistItem } from '@/types';
+
+export type Currency = 'INR' | 'USD' | 'GBP';
+
+const CONVERSION_RATES: Record<Currency, number> = {
+  INR: 1,
+  USD: 0.012,   // 1 INR ≈ 0.012 USD
+  GBP: 0.0095,  // 1 INR ≈ 0.0095 GBP
+};
+const CURRENCY_SYMBOLS: Record<Currency, string> = {
+  INR: '₹',
+  USD: '$',
+  GBP: '£',
+};
 
 interface ToastState {
   show: boolean;
@@ -16,6 +29,9 @@ interface AppContextType {
   wishlist: WishlistItem[];
   theme: 'light' | 'dark';
   toast: ToastState;
+  currency: Currency;
+  setCurrency: (c: Currency) => void;
+  formatPrice: (priceInINR: number) => string;
   showToast: (message: string, isError?: boolean) => void;
   hideToast: () => void;
   addToCart: (product: Product, quantity?: number) => void;
@@ -38,6 +54,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [loading, setLoading] = useState<boolean>(true);
   const [toast, setToast] = useState<ToastState>({ show: false, message: '', isError: false });
+  const [currency, setCurrencyState] = useState<Currency>('INR');
+
+  // Currency helpers
+  const setCurrency = (c: Currency) => {
+    setCurrencyState(c);
+    localStorage.setItem('rf_currency', c);
+  };
+
+  const formatPrice = useCallback((priceInINR: number): string => {
+    const converted = priceInINR * CONVERSION_RATES[currency];
+    const symbol = CURRENCY_SYMBOLS[currency];
+    if (currency === 'INR') {
+      return symbol + converted.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    }
+    return symbol + converted.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }, [currency]);
 
   // 1. Toast Notification Helpers
   const showToast = (message: string, isError = false) => {
@@ -48,12 +80,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setToast((prev) => ({ ...prev, show: false }));
   };
 
-  // Auto-hide toast after 3 seconds
+  // Auto-hide toast after 3.5 seconds
   useEffect(() => {
     if (toast.show) {
-      const timer = setTimeout(() => {
-        hideToast();
-      }, 3500);
+      const timer = setTimeout(() => hideToast(), 3500);
       return () => clearTimeout(timer);
     }
   }, [toast.show]);
@@ -63,6 +93,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const savedTheme = localStorage.getItem('rf_theme') as 'light' | 'dark' | null;
     const savedCart = localStorage.getItem('rf_cart');
     const savedWishlist = localStorage.getItem('rf_wishlist');
+    const savedCurrency = localStorage.getItem('rf_currency') as Currency | null;
 
     if (savedTheme) {
       setTheme(savedTheme);
@@ -71,23 +102,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       document.documentElement.setAttribute('data-theme', 'light');
     }
 
-    if (savedCart) {
-      try {
-        setCart(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Error parsing cart from localStorage', e);
-      }
+    if (savedCurrency && ['INR', 'USD', 'GBP'].includes(savedCurrency)) {
+      setCurrencyState(savedCurrency);
     }
 
+    if (savedCart) {
+      try { setCart(JSON.parse(savedCart)); } catch (e) { console.error('Cart parse error', e); }
+    }
     if (savedWishlist) {
-      try {
-        setWishlist(JSON.parse(savedWishlist));
-      } catch (e) {
-        console.error('Error parsing wishlist from localStorage', e);
-      }
+      try { setWishlist(JSON.parse(savedWishlist)); } catch (e) { console.error('Wishlist parse error', e); }
     }
 
     checkAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 3. User Authentication Sync
@@ -95,11 +122,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const res = await fetch('/api/auth/me');
       const data = await res.json();
-      if (data.success && data.user) {
-        setUser(data.user);
-      } else {
-        setUser(null);
-      }
+      setUser(data.success && data.user ? data.user : null);
     } catch (error) {
       console.error('Failed to fetch auth session:', error);
       setUser(null);
@@ -112,10 +135,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const addToCart = (product: Product, quantity = 1) => {
     if (!product._id) return;
     const prodId = product._id;
-    
+
     setCart((prevCart) => {
       const existingItemIdx = prevCart.findIndex((item) => item.productId === prodId);
-      let updatedCart: CartItem[] = [];
+      let updatedCart: CartItem[];
 
       if (existingItemIdx > -1) {
         updatedCart = prevCart.map((item, idx) =>
@@ -124,20 +147,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else {
         updatedCart = [
           ...prevCart,
-          {
-            productId: prodId,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity,
-          },
+          { productId: prodId, name: product.name, price: product.price, image: product.image, quantity },
         ];
       }
 
       localStorage.setItem('rf_cart', JSON.stringify(updatedCart));
       return updatedCart;
     });
-    
+
     showToast(`"${product.name}" added to cart!`);
   };
 
@@ -150,10 +167,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateCartQty = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
+    if (quantity <= 0) { removeFromCart(productId); return; }
     setCart((prevCart) => {
       const updatedCart = prevCart.map((item) =>
         item.productId === productId ? { ...item, quantity } : item
@@ -175,7 +189,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     setWishlist((prevWishlist) => {
       const exists = prevWishlist.some((item) => item.productId === prodId);
-      let updatedWishlist: WishlistItem[] = [];
+      let updatedWishlist: WishlistItem[];
 
       if (exists) {
         updatedWishlist = prevWishlist.filter((item) => item.productId !== prodId);
@@ -183,12 +197,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else {
         updatedWishlist = [
           ...prevWishlist,
-          {
-            productId: prodId,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-          },
+          { productId: prodId, name: product.name, price: product.price, image: product.image },
         ];
         showToast(`Added "${product.name}" to wishlist. ♥`);
       }
@@ -226,23 +235,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider
       value={{
-        user,
-        setUser,
-        cart,
-        wishlist,
-        theme,
-        toast,
-        showToast,
-        hideToast,
-        addToCart,
-        removeFromCart,
-        clearCart,
-        updateCartQty,
-        toggleWishlist,
-        toggleTheme,
-        logout,
-        checkAuth,
-        loading,
+        user, setUser,
+        cart, wishlist,
+        theme, toast,
+        currency, setCurrency, formatPrice,
+        showToast, hideToast,
+        addToCart, removeFromCart, clearCart, updateCartQty,
+        toggleWishlist, toggleTheme,
+        logout, checkAuth, loading,
       }}
     >
       {children}
@@ -252,8 +252,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
 export const useApp = () => {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useApp must be used within an AppProvider');
-  }
+  if (!context) throw new Error('useApp must be used within an AppProvider');
   return context;
 };

@@ -2,21 +2,20 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
+import { Currency } from '@/context/AppContext';
+import { useRouter } from 'next/navigation';
 
 interface CartSidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const formatINR = (amount: number) => {
-  return '₹' + amount.toLocaleString('en-IN');
-};
-
 export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
-  const { cart, removeFromCart, updateCartQty, clearCart, user, showToast } = useApp();
+  const { cart, removeFromCart, updateCartQty, clearCart, user, showToast, formatPrice } = useApp();
+  const router = useRouter();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // Checkout Form State
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -55,23 +54,17 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: cart,
-          shippingAddress: {
-            fullName,
-            phone,
-            email,
-            addressLine,
-            city,
-            zipCode,
-          },
+          shippingAddress: { fullName, phone, email, addressLine, city, zipCode },
         }),
       });
 
       const data = await res.json();
       if (data.success) {
-        showToast('🎉 Order placed successfully! Thank you.', false);
         clearCart();
         setIsCheckingOut(false);
         onClose();
+        // Redirect to the branded invoice / order-success page
+        router.push(`/checkout/success?orderId=${data.orderId || data.order?._id || ''}`);
       } else {
         showToast(data.error || 'Checkout failed.', true);
       }
@@ -86,10 +79,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
   return (
     <>
       {/* Sidebar Overlay */}
-      <div 
-        className={`cart-overlay ${isOpen ? 'open' : ''}`} 
-        onClick={onClose}
-      ></div>
+      <div className={`cart-overlay ${isOpen ? 'open' : ''}`} onClick={onClose}></div>
 
       {/* Cart Sidebar panel */}
       <aside className={`cart-sidebar ${isOpen ? 'open' : ''}`}>
@@ -102,16 +92,11 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
 
         <div className="cart-sidebar-body" style={{ overflowY: 'auto' }}>
           {!isCheckingOut ? (
-            // Standard Cart Items List
             cart.length === 0 ? (
               <div className="cart-empty">
                 <i className="bx bx-shopping-bag"></i>
                 <p>Your cart is empty</p>
-                <button 
-                  className="btn-primary-solid" 
-                  style={{ marginTop: '1rem' }} 
-                  onClick={onClose}
-                >
+                <button className="btn-primary-solid" style={{ marginTop: '1rem' }} onClick={onClose}>
                   Browse Collection
                 </button>
               </div>
@@ -120,19 +105,17 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
                 {cart.map((item) => (
                   <div className="cart-item" key={item.productId}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      className="cart-item-img" 
-                      src={item.image} 
-                      alt={item.name} 
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/images/p1.png';
-                      }}
+                    <img
+                      className="cart-item-img"
+                      src={item.image}
+                      alt={item.name}
+                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/p1.png'; }}
                     />
                     <div className="cart-item-info">
                       <div className="cart-item-name">{item.name}</div>
-                      <div className="cart-item-price">{formatINR(item.price)}</div>
+                      <div className="cart-item-price">{formatPrice(item.price)}</div>
                       <div className="cart-qty-controls" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
-                        <button 
+                        <button
                           className="icon-btn-qty"
                           onClick={() => updateCartQty(item.productId, item.quantity - 1)}
                           style={{ border: '1px solid var(--border)', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
@@ -140,7 +123,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
                           -
                         </button>
                         <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{item.quantity}</span>
-                        <button 
+                        <button
                           className="icon-btn-qty"
                           onClick={() => updateCartQty(item.productId, item.quantity + 1)}
                           style={{ border: '1px solid var(--border)', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
@@ -149,11 +132,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
                         </button>
                       </div>
                     </div>
-                    <button 
-                      className="cart-item-remove" 
-                      onClick={() => removeFromCart(item.productId)}
-                      aria-label="Remove item"
-                    >
+                    <button className="cart-item-remove" onClick={() => removeFromCart(item.productId)} aria-label="Remove item">
                       <i className="bx bx-trash"></i>
                     </button>
                   </div>
@@ -161,67 +140,30 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
               </div>
             )
           ) : (
-            // Checkout Delivery Form
             <form onSubmit={handleCheckoutSubmit} className="checkout-sidebar-form" style={{ padding: '0.5rem' }}>
               <div className="rf-input-group">
                 <label>Recipient Full Name</label>
-                <input 
-                  type="text" 
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="John Doe" 
-                  required 
-                />
+                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="John Doe" required />
               </div>
               <div className="rf-input-group">
                 <label>Contact Phone</label>
-                <input 
-                  type="tel" 
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91 98765 43210" 
-                  required 
-                />
+                <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98765 43210" required />
               </div>
               <div className="rf-input-group">
                 <label>Email Address</label>
-                <input 
-                  type="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="john@example.com" 
-                  required 
-                />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" required />
               </div>
               <div className="rf-input-group">
                 <label>Street Address</label>
-                <input 
-                  type="text" 
-                  value={addressLine}
-                  onChange={(e) => setAddressLine(e.target.value)}
-                  placeholder="Apt 4B, Luxury Towers" 
-                  required 
-                />
+                <input type="text" value={addressLine} onChange={(e) => setAddressLine(e.target.value)} placeholder="Apt 4B, Luxury Towers" required />
               </div>
               <div className="rf-input-group">
                 <label>City</label>
-                <input 
-                  type="text" 
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  placeholder="Mumbai" 
-                  required 
-                />
+                <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Mumbai" required />
               </div>
               <div className="rf-input-group">
                 <label>Zip/Postal Code</label>
-                <input 
-                  type="text" 
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  placeholder="400001" 
-                  required 
-                />
+                <input type="text" value={zipCode} onChange={(e) => setZipCode(e.target.value)} placeholder="400001" required />
               </div>
 
               {!user && (
@@ -231,20 +173,10 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
               )}
 
               <div style={{ display: 'flex', gap: '10px', marginTop: '1.5rem' }}>
-                <button 
-                  type="button" 
-                  className="btn-secondary-outline" 
-                  style={{ flex: 1 }}
-                  onClick={() => setIsCheckingOut(false)}
-                >
+                <button type="button" className="btn-secondary-outline" style={{ flex: 1 }} onClick={() => setIsCheckingOut(false)}>
                   Back
                 </button>
-                <button 
-                  type="submit" 
-                  className="btn-primary-solid" 
-                  style={{ flex: 1.5 }}
-                  disabled={isSubmitting || !user || cart.length === 0}
-                >
+                <button type="submit" className="btn-primary-solid" style={{ flex: 1.5 }} disabled={isSubmitting || !user || cart.length === 0}>
                   {isSubmitting ? 'Placing Order...' : 'Place Order'}
                 </button>
               </div>
@@ -257,11 +189,11 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
           <div className="cart-sidebar-footer">
             <div className="cart-total-row">
               <span>Subtotal</span>
-              <span className="cart-total-price">{formatINR(subtotal)}</span>
+              <span className="cart-total-price">{formatPrice(subtotal)}</span>
             </div>
-            <p className="cart-tax-note">Taxes & delivery calculated at checkout</p>
-            <button 
-              className="btn-primary-solid" 
+            <p className="cart-tax-note">Taxes &amp; delivery calculated at checkout</p>
+            <button
+              className="btn-primary-solid"
               style={{ width: '100%', display: 'block', textTransform: 'uppercase', letterSpacing: '1px' }}
               onClick={() => setIsCheckingOut(true)}
             >

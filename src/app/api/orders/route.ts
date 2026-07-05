@@ -25,7 +25,7 @@ const orderCreateSchema = z.object({
   }),
 });
 
-// GET: Retrieve logged-in user's orders
+// GET: Retrieve logged-in user's orders (or a single order by orderId query param)
 export async function GET(req: NextRequest) {
   try {
     await dbConnect();
@@ -36,14 +36,21 @@ export async function GET(req: NextRequest) {
         { status: 401 }
       );
     }
-    
+
+    const { searchParams } = new URL(req.url);
+    const orderId = searchParams.get('orderId');
+
+    if (orderId) {
+      const order = await Order.findOne({ _id: orderId, user: tokenUser.userId });
+      if (!order) {
+        return NextResponse.json({ success: false, error: 'Order not found.' }, { status: 404 });
+      }
+      return NextResponse.json({ success: true, order });
+    }
+
     const orders = await Order.find({ user: tokenUser.userId }).sort({ createdAt: -1 });
-    
-    return NextResponse.json({
-      success: true,
-      orders,
-    });
-  } catch (error: any) {
+    return NextResponse.json({ success: true, orders });
+  } catch (error: unknown) {
     console.error('Fetch Orders API Error:', error);
     return NextResponse.json(
       { success: false, error: 'An internal server error occurred.' },
@@ -120,6 +127,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Order placed successfully!',
+      orderId: newOrder._id.toString(),
       order: newOrder,
     }, { status: 201 });
   } catch (error: any) {

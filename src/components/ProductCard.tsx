@@ -16,23 +16,18 @@ const RATING_MAP: Record<number, string> = {
   5: '★★★★★',
 };
 
-// Map original IDs or names to ratings if needed, or fallback
 const getStars = (product: Product) => {
   const avg = product.ratings?.average || 5;
   const rounded = Math.round(avg);
   return RATING_MAP[rounded] || '★★★★★';
 };
 
-const formatINR = (amount: number) => {
-  return '₹' + amount.toLocaleString('en-IN');
-};
-
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart, toggleWishlist, wishlist } = useApp();
-  
+  const { addToCart, toggleWishlist, wishlist, formatPrice } = useApp();
+
   const originalPriceVal = product.originalPrice || 0;
-  const savings = originalPriceVal > product.price 
-    ? Math.round((1 - product.price / originalPriceVal) * 100) 
+  const savings = originalPriceVal > product.price
+    ? Math.round((1 - product.price / originalPriceVal) * 100)
     : 0;
 
   const inWishlist = wishlist.some((w) => w.productId === product._id);
@@ -51,13 +46,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <article className="product-card visible">
       <div className="product-card-media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src={product.image} 
-          alt={product.name} 
-          loading="lazy" 
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = '/images/p1.png';
-          }}
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          onError={(e) => { (e.target as HTMLImageElement).src = '/images/p1.png'; }}
         />
         {product.badge === 'sale' && savings > 0 && (
           <span className="product-badge badge-sale">−{savings}%</span>
@@ -69,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <button className="quick-action-btn quick-add-cart" onClick={handleAddToCartClick}>
             <i className="bx bx-cart-add"></i> Add to Cart
           </button>
-          <button 
+          <button
             className={`quick-action-btn quick-wishlist ${inWishlist ? 'wishlisted' : ''}`}
             onClick={handleWishlistClick}
             aria-label="Toggle wishlist"
@@ -89,10 +82,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="product-card-name">{product.name}</h3>
         <p className="product-card-desc">{product.description}</p>
         <div className="product-card-pricing">
-          <span className="price-current">{formatINR(product.price)}</span>
+          <span className="price-current">{formatPrice(product.price)}</span>
           {product.originalPrice && product.originalPrice > product.price && (
             <>
-              <span className="price-original">{formatINR(product.originalPrice)}</span>
+              <span className="price-original">{formatPrice(product.originalPrice)}</span>
               <span className="price-savings">{savings}% off</span>
             </>
           )}

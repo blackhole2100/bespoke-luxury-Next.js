@@ -9,17 +9,12 @@ interface WishlistModalProps {
   onClose: () => void;
 }
 
-const formatINR = (amount: number) => {
-  return '₹' + amount.toLocaleString('en-IN');
-};
-
 export const WishlistModal: React.FC<WishlistModalProps> = ({ isOpen, onClose }) => {
-  const { wishlist, toggleWishlist, addToCart } = useApp();
+  const { wishlist, toggleWishlist, addToCart, formatPrice } = useApp();
 
   if (!isOpen) return null;
 
   const handleMoveToCart = (item: { productId: string; name: string; price: number; image: string }) => {
-    // Construct a temporary Product object to pass to addToCart
     const product: Product = {
       _id: item.productId,
       name: item.name,
@@ -28,17 +23,13 @@ export const WishlistModal: React.FC<WishlistModalProps> = ({ isOpen, onClose })
       category: '',
       description: '',
     };
-    
-    // Add to cart
     addToCart(product, 1);
-    
-    // Remove from wishlist
     toggleWishlist(product);
   };
 
   return (
-    <div 
-      className="modal show fade" 
+    <div
+      className="modal show fade"
       style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
       role="dialog"
       aria-modal="true"
@@ -49,9 +40,9 @@ export const WishlistModal: React.FC<WishlistModalProps> = ({ isOpen, onClose })
             <h5 className="modal-title" style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', margin: 0 }}>
               My Wishlist {wishlist.length > 0 && `(${wishlist.length})`}
             </h5>
-            <button 
-              type="button" 
-              className="btn-close icon-btn" 
+            <button
+              type="button"
+              className="btn-close icon-btn"
               onClick={onClose}
               style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}
               aria-label="Close wishlist"
@@ -68,38 +59,36 @@ export const WishlistModal: React.FC<WishlistModalProps> = ({ isOpen, onClose })
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 {wishlist.map((item) => (
-                  <div 
-                    className="cart-item" 
+                  <div
+                    className="cart-item"
                     key={item.productId}
-                    style={{ display: 'flex', alignItems: 'center', gap: '15px', paddingBottom: '15px', borderBottom: '1px solid var(--border-color)' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '15px', paddingBottom: '15px', borderBottom: '1px solid var(--border)' }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img 
-                      className="cart-item-img" 
-                      src={item.image} 
-                      alt={item.name} 
+                    <img
+                      className="cart-item-img"
+                      src={item.image}
+                      alt={item.name}
                       style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/images/p1.png';
-                      }}
+                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/p1.png'; }}
                     />
                     <div className="cart-item-info" style={{ flex: 1 }}>
                       <div className="cart-item-name" style={{ fontWeight: 600, fontSize: '0.95rem' }}>{item.name}</div>
                       <div className="cart-item-price" style={{ color: 'var(--accent)', fontWeight: 500, fontSize: '0.9rem', marginTop: '4px' }}>
-                        {formatINR(item.price)}
+                        {formatPrice(item.price)}
                       </div>
                     </div>
-                    
+
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <button 
-                        className="btn-primary-solid" 
+                      <button
+                        className="btn-primary-solid"
                         style={{ padding: '8px 14px', fontSize: '0.72rem', whiteSpace: 'nowrap', textTransform: 'uppercase', letterSpacing: '0.5px' }}
                         onClick={() => handleMoveToCart(item)}
                       >
                         Add to Cart
                       </button>
-                      <button 
-                        className="icon-btn" 
+                      <button
+                        className="icon-btn"
                         style={{ color: 'var(--text-muted)', cursor: 'pointer' }}
                         onClick={() => toggleWishlist({ _id: item.productId, name: item.name, price: item.price, image: item.image, category: '', description: '' })}
                         aria-label="Remove item"

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
+import type { Currency } from '@/context/AppContext';
 import { CartSidebar } from './CartSidebar';
 import { WishlistModal } from './WishlistModal';
 
@@ -14,7 +15,9 @@ export const Header: React.FC = () => {
     cart, 
     wishlist, 
     theme, 
-    toggleTheme 
+    toggleTheme,
+    currency,
+    setCurrency,
   } = useApp();
   
   const pathname = usePathname();
@@ -161,6 +164,35 @@ export const Header: React.FC = () => {
               <i className="bx bx-heart"></i>
               <span className="badge-dot" id="wishlist-count">{wishlist.length}</span>
             </button>
+
+            {/* Currency Switcher */}
+            <div className="currency-switcher" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+              <select
+                id="currency-select"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value as Currency)}
+                aria-label="Select currency"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border)',
+                  borderRadius: '20px',
+                  padding: '4px 28px 4px 10px',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.06em',
+                  color: 'var(--text-primary)',
+                  cursor: 'pointer',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  outline: 'none',
+                }}
+              >
+                <option value="INR">₹ INR</option>
+                <option value="USD">$ USD</option>
+                <option value="GBP">£ GBP</option>
+              </select>
+              <i className="bx bx-chevron-down" style={{ position: 'absolute', right: '8px', pointerEvents: 'none', fontSize: '0.9rem', color: 'var(--text-muted)' }}></i>
+            </div>
 
             {/* Theme Toggle */}
             <button 

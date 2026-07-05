@@ -128,6 +128,17 @@ export default function Home() {
   const [cMessage, setCMessage] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
 
+  // Consultation Booking Form Fields
+  const [bName, setBName] = useState('');
+  const [bEmail, setBEmail] = useState('');
+  const [bPhone, setBPhone] = useState('');
+  const [bService, setBService] = useState('in-store');
+  const [bDate, setBDate] = useState('');
+  const [bTime, setBTime] = useState('10:00');
+  const [bNotes, setBNotes] = useState('');
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [submittingBooking, setSubmittingBooking] = useState(false);
+
   // Fetch initial products catalog
   useEffect(() => {
     const fetchProducts = async () => {
@@ -365,6 +376,130 @@ export default function Home() {
 
       {/* 7. CLIENT STORIES */}
       <ReviewsCarousel />
+
+      {/* 7.5 BOOK A CONSULTATION */}
+      <section style={{ background: 'var(--bg-secondary)', padding: '6rem 2rem' }} id="consultation">
+        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+          {/* Left info panel */}
+          <div>
+            <span className="section-label">Private Appointment</span>
+            <h2 className="section-heading" style={{ marginTop: '0.5rem', marginBottom: '1.25rem' }}>Book a Design <em>Consultation</em></h2>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+              Our expert design consultants offer tailored sessions to help you craft the perfect living space.
+              Choose between an <strong>In-Store Showcase</strong>, a <strong>Virtual Design Session</strong>, or an exclusive <strong>Home Visit</strong>.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {[
+                { icon: 'bx-store', title: 'In-Store Showcase', desc: 'Explore our SoHo showroom with a dedicated design consultant.' },
+                { icon: 'bx-video', title: 'Virtual Session', desc: 'A 45-minute HD video consultation — available globally.' },
+                { icon: 'bx-home-circle', title: 'Home Visit', desc: 'Our consultants come to you anywhere in the tri-state area.' },
+              ].map(({ icon, title, desc }) => (
+                <div key={title} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '40px', height: '40px', background: 'var(--accent-bg, rgba(184,150,110,0.12))', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <i className={`bx ${icon}`} style={{ color: 'var(--accent)', fontSize: '1.2rem' }}></i>
+                  </div>
+                  <div>
+                    <strong style={{ color: 'var(--text-primary)', fontSize: '0.9rem' }}>{title}</strong>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: '4px 0 0', lineHeight: '1.5' }}>{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right booking form */}
+          <div style={{ background: 'var(--bg-primary)', borderRadius: '16px', padding: '2.5rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-md, 0 8px 40px rgba(0,0,0,0.08))' }}>
+            {bookingSuccess ? (
+              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.8rem', color: '#16a34a' }}>
+                  <i className="bx bx-check"></i>
+                </div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 300, color: 'var(--text-primary)', marginBottom: '0.75rem' }}>Booking Confirmed!</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.7' }}>
+                  Your consultation request has been received. Our team will confirm within 24 hours via email.
+                </p>
+                <button onClick={() => { setBookingSuccess(false); setBName(''); setBEmail(''); setBPhone(''); setBNotes(''); }} className="btn-primary-solid" style={{ marginTop: '1.5rem' }}>
+                  Book Another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (!bName || !bEmail || !bPhone || !bDate) {
+                  showToast('Please fill in all required fields.', true);
+                  return;
+                }
+                setSubmittingBooking(true);
+                try {
+                  const res = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: bName, email: bEmail, phone: bPhone, service: bService, date: bDate, time: bTime, notes: bNotes }),
+                  });
+                  const data = await res.json();
+                  if (data.success) {
+                    setBookingSuccess(true);
+                  } else {
+                    showToast(data.error || 'Booking failed. Please try again.', true);
+                  }
+                } catch {
+                  showToast('A network error occurred.', true);
+                } finally {
+                  setSubmittingBooking(false);
+                }
+              }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                  <div className="rf-input-group">
+                    <label htmlFor="b-name">Full Name *</label>
+                    <input id="b-name" type="text" value={bName} onChange={(e) => setBName(e.target.value)} placeholder="Eleanor Voss" required />
+                  </div>
+                  <div className="rf-input-group">
+                    <label htmlFor="b-phone">Phone *</label>
+                    <input id="b-phone" type="tel" value={bPhone} onChange={(e) => setBPhone(e.target.value)} placeholder="+1 212 000 0000" required />
+                  </div>
+                </div>
+                <div className="rf-input-group" style={{ marginBottom: '1rem' }}>
+                  <label htmlFor="b-email">Email Address *</label>
+                  <input id="b-email" type="email" value={bEmail} onChange={(e) => setBEmail(e.target.value)} placeholder="eleanor@example.com" required />
+                </div>
+                <div className="rf-input-group" style={{ marginBottom: '1rem' }}>
+                  <label htmlFor="b-service">Session Type</label>
+                  <select id="b-service" value={bService} onChange={(e) => setBService(e.target.value)}>
+                    <option value="in-store">In-Store Showcase</option>
+                    <option value="virtual">Virtual Design Session</option>
+                    <option value="home-visit">Home Visit</option>
+                  </select>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                  <div className="rf-input-group">
+                    <label htmlFor="b-date">Preferred Date *</label>
+                    <input id="b-date" type="date" value={bDate} onChange={(e) => setBDate(e.target.value)} min={new Date().toISOString().split('T')[0]} required />
+                  </div>
+                  <div className="rf-input-group">
+                    <label htmlFor="b-time">Preferred Time</label>
+                    <select id="b-time" value={bTime} onChange={(e) => setBTime(e.target.value)}>
+                      {['09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00'].map((t) => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="rf-input-group" style={{ marginBottom: '1.5rem' }}>
+                  <label htmlFor="b-notes">Additional Notes</label>
+                  <textarea id="b-notes" rows={3} value={bNotes} onChange={(e) => setBNotes(e.target.value)} placeholder="Tell us about your space, style preferences, or specific pieces you have in mind..."></textarea>
+                </div>
+                <button type="submit" className="btn-primary-solid" style={{ width: '100%' }} disabled={submittingBooking}>
+                  {submittingBooking ? (
+                    <span><i className="bx bx-loader-alt bx-spin" style={{ marginRight: '6px' }}></i>Scheduling...</span>
+                  ) : (
+                    <span>Request Consultation <i className="bx bx-calendar-plus" style={{ marginLeft: '6px' }}></i></span>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* 8. CONTACT FORM */}
       <section className="contact-section reveal visible" id="contact">
