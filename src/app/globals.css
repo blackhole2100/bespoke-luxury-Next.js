@@ -1154,7 +1154,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
     padding: 2.5rem;
-    min-width: 360px;
+    width: 100%;
+    min-width: 0;
     flex-shrink: 0;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
@@ -1616,7 +1617,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     .trust-grid { grid-template-columns: 1fr; }
     .gallery-masonry { grid-template-columns: 1fr 1fr; }
     .gallery-item.tall { grid-row: span 1; }
-    .review-card { min-width: 290px; }
+    .review-card { min-width: 0; width: 100%; }
     .review-nav.prev { left: -12px; }
     .review-nav.next { right: -12px; }
     .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
