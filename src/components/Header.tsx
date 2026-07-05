@@ -1,0 +1,296 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useApp } from '@/context/AppContext';
+import { CartSidebar } from './CartSidebar';
+import { WishlistModal } from './WishlistModal';
+
+export const Header: React.FC = () => {
+  const { 
+    user, 
+    logout, 
+    cart, 
+    wishlist, 
+    theme, 
+    toggleTheme 
+  } = useApp();
+  
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isAnnouncementVisible, setIsAnnouncementVisible] = useState(true);
+  const [searchInput, setSearchInput] = useState('');
+  
+  // Drawer States
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+
+  // Monitor Scroll for Sticky Header styling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setIsScrolled(true);
+        setIsAnnouncementVisible(false);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      window.location.href = `/product?search=${encodeURIComponent(searchInput.trim())}`;
+    }
+  };
+
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Helper to resolve anchor links depending on whether we are on the homepage
+  const getNavLink = (anchor: string) => {
+    if (pathname === '/') {
+      return anchor;
+    }
+    return `/${anchor}`;
+  };
+
+  return (
+    <>
+      {/* ===================== SCROLL PROGRESS BAR ===================== */}
+      <div id="scroll-progress" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '4px', zIndex: 9999 }}>
+        <div 
+          id="scroll-bar" 
+          style={{ 
+            height: '100%', 
+            backgroundColor: 'var(--accent)', 
+            width: '0%', 
+            transition: 'width 0.1s ease' 
+          }}
+        ></div>
+      </div>
+
+      {/* ===================== TOP ANNOUNCEMENT BANNER ===================== */}
+      {isAnnouncementVisible && (
+        <div className="announcement-bar" id="announcement-bar">
+          <p>🎉 Limited Time: <strong>Free Delivery</strong> on all orders above ₹50,000 &nbsp;|&nbsp; Use code <strong>ROYAL2025</strong></p>
+          <button 
+            className="close-announcement" 
+            onClick={() => setIsAnnouncementVisible(false)}
+            aria-label="Close announcement"
+          >
+            <i className="bx bx-x"></i>
+          </button>
+        </div>
+      )}
+
+      {/* ===================== HEADER ===================== */}
+      <header 
+        className={`site-header ${isScrolled ? 'scrolled' : ''}`} 
+        id="site-header"
+        style={{ top: isAnnouncementVisible ? 'var(--announcement-height, 40px)' : '0px' }}
+      >
+        <div className="header-inner">
+          <div className="header-logo">
+            <Link href="/">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/images/logo1.png" 
+                alt="Royal Furniture" 
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                  const sibling = (e.target as HTMLElement).nextElementSibling;
+                  if (sibling) (sibling as HTMLElement).style.display = 'block';
+                }}
+              />
+              <span className="logo-text-fallback" style={{ display: 'none' }}>ROYAL</span>
+            </Link>
+          </div>
+
+          <nav className={`header-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`} id="header-nav">
+            <ul>
+              <li><Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={handleNavClick}>Home</Link></li>
+              <li><Link href={getNavLink('#about')} className="nav-link" onClick={handleNavClick}>Story</Link></li>
+              <li><Link href={getNavLink('#product')} className="nav-link" onClick={handleNavClick}>Collection</Link></li>
+              <li><Link href={getNavLink('#gallery')} className="nav-link" onClick={handleNavClick}>Gallery</Link></li>
+              <li><Link href={getNavLink('#reviews')} className="nav-link" onClick={handleNavClick}>Reviews</Link></li>
+              <li><Link href={getNavLink('#contact')} className="nav-link" onClick={handleNavClick}>Contact</Link></li>
+              <li><Link href="/product" className={`nav-link nav-cta ${pathname === '/product' ? 'active' : ''}`} onClick={handleNavClick}>Shop All</Link></li>
+            </ul>
+          </nav>
+
+          <div className="header-actions">
+            {/* Search */}
+            <div className="search-wrapper">
+              <button 
+                className="icon-btn" 
+                id="search-toggle" 
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                aria-label="Search"
+              >
+                <i className="bx bx-search"></i>
+              </button>
+              <div className={`search-dropdown ${isSearchOpen ? 'open' : ''}`} id="search-dropdown">
+                <form onSubmit={handleSearchSubmit}>
+                  <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Search products..." 
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    autoComplete="off"
+                  />
+                  <button type="submit" style={{ display: 'none' }}></button>
+                </form>
+                <i className="bx bx-search search-icon-inside"></i>
+              </div>
+            </div>
+
+            {/* Wishlist */}
+            <button 
+              className="icon-btn" 
+              onClick={() => setIsWishlistOpen(true)}
+              aria-label="Wishlist"
+            >
+              <i className="bx bx-heart"></i>
+              <span className="badge-dot" id="wishlist-count">{wishlist.length}</span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button 
+              className="icon-btn" 
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              <i className={`bx ${theme === 'dark' ? 'bx-sun' : 'bx-moon'}`}></i>
+            </button>
+
+            {/* Cart */}
+            <button 
+              className="icon-btn cart-btn" 
+              onClick={() => setIsCartOpen(true)}
+              aria-label="Shopping cart"
+            >
+              <i className="bx bx-shopping-bag"></i>
+              <span className="badge-dot" id="cart-count">{cart.length}</span>
+            </button>
+
+            {/* Account dropdown */}
+            <div className="account-dropdown-container" style={{ position: 'relative', display: 'inline-block' }}>
+              {user ? (
+                <div className="user-logged-in-menu" style={{ display: 'flex', alignItems: 'center' }}>
+                  <button 
+                    className="icon-btn"
+                    style={{ fontSize: '0.8rem', fontWeight: 600, border: '1px solid var(--border)', borderRadius: '20px', padding: '4px 12px', display: 'flex', alignItems: 'center', gap: '5px' }}
+                    onClick={() => {
+                      const menu = document.getElementById('user-menu');
+                      if (menu) menu.classList.toggle('show');
+                    }}
+                  >
+                    <i className="bx bx-user-circle" style={{ fontSize: '1.1rem' }}></i>
+                    <span style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {user.name.split(' ')[0]}
+                    </span>
+                  </button>
+                  <ul 
+                    className="dropdown-menu" 
+                    id="user-menu"
+                    style={{ 
+                      position: 'absolute', 
+                      top: '100%', 
+                      right: 0, 
+                      zIndex: 1000, 
+                      display: 'none', 
+                      float: 'left', 
+                      minWidth: '150px', 
+                      padding: '10px', 
+                      margin: '10px 0 0', 
+                      fontSize: '0.85rem', 
+                      color: 'var(--text-primary)', 
+                      textAlign: 'left', 
+                      listStyle: 'none', 
+                      backgroundColor: 'var(--bg-primary)', 
+                      backgroundClip: 'padding-box', 
+                      border: '1px solid var(--border)', 
+                      borderRadius: '8px', 
+                      boxShadow: 'var(--shadow-sm)'
+                    }}
+                  >
+                    {user.role === 'admin' && (
+                      <li style={{ marginBottom: '8px' }}>
+                        <Link 
+                          href="/admin/dashboard" 
+                          style={{ color: 'var(--text-primary)', display: 'block', padding: '4px 10px', textDecoration: 'none', fontWeight: 600 }}
+                          onClick={() => document.getElementById('user-menu')?.classList.remove('show')}
+                        >
+                          <i className="bx bx-shield-quarter" style={{ marginRight: '6px' }}></i> Admin
+                        </Link>
+                      </li>
+                    )}
+                    <li>
+                      <button 
+                        onClick={async () => {
+                          document.getElementById('user-menu')?.classList.remove('show');
+                          await logout();
+                        }}
+                        style={{ background: 'none', border: 'none', color: '#dc3545', display: 'block', width: '100%', textAlign: 'left', padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        <i className="bx bx-log-out" style={{ marginRight: '6px' }}></i> Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <Link href="/signup" className="icon-btn" aria-label="Account">
+                  <i className="bx bx-user"></i>
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="icon-btn mobile-menu-toggle" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Menu"
+            >
+              <i className="bx bx-menu"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Cart Sidebar Drawer */}
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
+      {/* Wishlist Drawer */}
+      <WishlistModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+
+      {/* Scroll to Progress implementation effect helper */}
+      <ScrollProgressUpdater />
+    </>
+  );
+};
+
+// Internal mini-component to keep layout side-effect free and handle progress bar updates on scroll
+const ScrollProgressUpdater: React.FC = () => {
+  useEffect(() => {
+    const handleScroll = () => {
+      const bar = document.getElementById('scroll-bar');
+      if (!bar) return;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (docH > 0) {
+        bar.style.width = (window.scrollY / docH * 100) + '%';
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return null;
+};
