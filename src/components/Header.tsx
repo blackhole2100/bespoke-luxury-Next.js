@@ -30,6 +30,7 @@ export const Header: React.FC = () => {
   // Drawer States
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   // Monitor Scroll for Sticky Header styling
   useEffect(() => {
@@ -220,10 +221,7 @@ export const Header: React.FC = () => {
                   <button 
                     className="icon-btn"
                     style={{ fontSize: '0.8rem', fontWeight: 600, border: '1px solid var(--border)', borderRadius: '20px', padding: '4px 12px', display: 'flex', alignItems: 'center', gap: '5px' }}
-                    onClick={() => {
-                      const menu = document.getElementById('user-menu');
-                      if (menu) menu.classList.toggle('show');
-                    }}
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   >
                     <i className="bx bx-user-circle" style={{ fontSize: '1.1rem' }}></i>
                     <span style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -238,7 +236,7 @@ export const Header: React.FC = () => {
                       top: '100%', 
                       right: 0, 
                       zIndex: 1000, 
-                      display: 'none', 
+                      display: isUserMenuOpen ? 'block' : 'none', 
                       float: 'left', 
                       minWidth: '150px', 
                       padding: '10px', 
@@ -259,7 +257,7 @@ export const Header: React.FC = () => {
                         <Link 
                           href="/admin/dashboard" 
                           style={{ color: 'var(--text-primary)', display: 'block', padding: '4px 10px', textDecoration: 'none', fontWeight: 600 }}
-                          onClick={() => document.getElementById('user-menu')?.classList.remove('show')}
+                          onClick={() => setIsUserMenuOpen(false)}
                         >
                           <i className="bx bx-shield-quarter" style={{ marginRight: '6px' }}></i> Admin
                         </Link>
@@ -268,7 +266,7 @@ export const Header: React.FC = () => {
                     <li>
                       <button 
                         onClick={async () => {
-                          document.getElementById('user-menu')?.classList.remove('show');
+                          setIsUserMenuOpen(false);
                           await logout();
                         }}
                         style={{ background: 'none', border: 'none', color: '#dc3545', display: 'block', width: '100%', textAlign: 'left', padding: '4px 10px', cursor: 'pointer', fontWeight: 600 }}

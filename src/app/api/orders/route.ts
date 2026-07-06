@@ -86,9 +86,15 @@ export async function POST(req: NextRequest) {
     let computedTotal = 0;
     const validatedItems = [];
     
+    console.log('[DEBUG /api/orders] Incoming Items:', items);
+    
     for (const item of items) {
+      console.log('[DEBUG /api/orders] Searching for productId:', item.productId);
       const product = await Product.findById(item.productId);
+      console.log('[DEBUG /api/orders] Database result:', product ? `Found: ${product.name}` : 'Not Found');
+      
       if (!product) {
+        console.log('[DEBUG /api/orders] Product not found, returning 404');
         return NextResponse.json(
           { success: false, error: `Product "${item.name}" no longer exists in our catalog.` },
           { status: 404 }
