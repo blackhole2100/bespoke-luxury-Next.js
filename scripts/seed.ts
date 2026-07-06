@@ -1,3 +1,7 @@
+import { loadEnvConfig } from '@next/env';
+// Load environment variables before importing database connection
+loadEnvConfig(process.cwd());
+
 import dbConnect from '../src/lib/dbConnect';
 import Product from '../src/models/Product';
 import User from '../src/models/User';
