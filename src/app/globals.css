@@ -1150,6 +1150,17 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     gap: 1.5rem;
     transition: transform 0.5s var(--ease-out);
 }
+.reviews-carousel-container {
+    padding: 0 60px;
+}
+.review-quote-text {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
 .review-card {
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
@@ -1631,6 +1642,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     .gallery-masonry { grid-template-columns: 1fr 1fr; }
     .gallery-item.tall { grid-row: span 1; }
     .review-card { min-width: 0; width: 100%; }
+    .reviews-carousel-container { padding: 0 24px; }
+    .review-quote-text { font-size: 1.15rem; margin-bottom: 1rem; }
     .review-nav.prev { left: -12px; }
     .review-nav.next { right: -12px; }
     .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }

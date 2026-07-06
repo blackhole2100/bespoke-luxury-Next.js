@@ -67,7 +67,7 @@ export const ReviewsCarousel: React.FC = () => {
         <h2 className="section-heading">What Our Clients <em>Say</em></h2>
       </div>
 
-      <div className="reviews-carousel-container" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto', padding: '0 60px' }}>
+      <div className="reviews-carousel-container" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
         <div className="reviews-track-wrapper" style={{ overflow: 'hidden' }}>
           <div 
             className="reviews-track" 
@@ -87,7 +87,7 @@ export const ReviewsCarousel: React.FC = () => {
                 <div className="review-stars" style={{ color: 'var(--accent)', fontSize: '1.25rem', marginBottom: '1.25rem' }}>
                   {review.stars}
                 </div>
-                <blockquote style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontStyle: 'italic', lineHeight: '1.6', color: 'var(--text-primary)', marginBottom: '1.5rem', borderLeft: 'none', paddingLeft: 0, whiteSpace: 'normal', wordBreak: 'break-word' }}>
+                <blockquote className="review-quote-text" style={{ borderLeft: 'none', paddingLeft: 0, whiteSpace: 'normal', wordBreak: 'break-word' }}>
                   {review.quote}
                 </blockquote>
                 <div className="reviewer" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
