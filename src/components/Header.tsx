@@ -46,6 +46,16 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Collapse the hero top margin when announcement banner is hidden
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty(
+        '--announcement-h',
+        isAnnouncementVisible ? '40px' : '0px'
+      );
+    }
+  }, [isAnnouncementVisible]);
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchInput.trim()) {
@@ -118,6 +128,23 @@ export const Header: React.FC = () => {
           </div>
 
           <nav className={`header-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`} id="header-nav">
+            {/* Close Button inside Drawer */}
+            <button 
+              className="mobile-menu-close" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close menu"
+              style={{
+                position: 'absolute',
+                top: '1.25rem',
+                right: '1.5rem',
+                fontSize: '1.8rem',
+                color: 'var(--text-primary)',
+                cursor: 'pointer',
+                display: 'none' // Controlled in responsive CSS
+              }}
+            >
+              <i className="bx bx-x"></i>
+            </button>
             <ul>
               <li><Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={handleNavClick}>Home</Link></li>
               <li><Link href={getNavLink('#about')} className="nav-link" onClick={handleNavClick}>Story</Link></li>

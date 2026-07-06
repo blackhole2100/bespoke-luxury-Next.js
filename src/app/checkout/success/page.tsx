@@ -151,35 +151,66 @@ function OrderSuccessContent() {
           </p>
 
           {/* Visual Order Progress Tracker */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '560px', margin: '0 auto', position: 'relative', padding: '0 1rem' }}>
-            {/* Horizontal Connector Line */}
-            <div style={{ position: 'absolute', top: '16px', left: '10%', right: '10%', height: '2px', background: 'var(--border)', zIndex: 1 }} />
-            <div style={{ position: 'absolute', top: '16px', left: '10%', width: '30%', height: '2px', background: 'var(--accent)', zIndex: 2 }} />
+          {(() => {
+            const currentStatus = order?.status || 'Pending';
+            const statusMap: Record<string, number> = {
+              'Pending': 1,
+              'Confirmed': 1,
+              'Processing': 2,
+              'Fabrication': 2,
+              'Shipped': 3,
+              'Inspection': 3,
+              'Delivered': 4,
+              'Delivery': 4
+            };
+            const activeStep = statusMap[currentStatus] || 1;
+            const getProgressWidth = () => {
+              if (activeStep >= 4) return '80%';
+              if (activeStep === 3) return '53.3%';
+              if (activeStep === 2) return '26.6%';
+              return '0%';
+            };
 
-            {/* Step 1 */}
-            <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <div className="step-circle active"><i className="bx bx-check"></i></div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-primary)' }}>Confirmed</span>
-            </div>
+            return (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '560px', margin: '0 auto', position: 'relative', padding: '0 1rem' }}>
+                {/* Horizontal Connector Line */}
+                <div style={{ position: 'absolute', top: '16px', left: '10%', right: '10%', height: '2px', background: 'var(--border)', zIndex: 1 }} />
+                <div style={{ position: 'absolute', top: '16px', left: '10%', width: getProgressWidth(), height: '2px', background: 'var(--accent)', zIndex: 2, transition: 'width 0.4s ease' }} />
 
-            {/* Step 2 */}
-            <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <div className="step-circle active" style={{ fontSize: '0.8rem' }}>2</div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-primary)' }}>Fabrication</span>
-            </div>
+                {/* Step 1 */}
+                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                  <div className={`step-circle ${activeStep >= 1 ? 'active' : 'pending'}`}>
+                    {activeStep > 1 ? <i className="bx bx-check"></i> : '1'}
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: activeStep >= 1 ? 700 : 600, textTransform: 'uppercase', color: activeStep >= 1 ? 'var(--text-primary)' : 'var(--text-muted)' }}>Confirmed</span>
+                </div>
 
-            {/* Step 3 */}
-            <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <div className="step-circle pending" style={{ fontSize: '0.8rem' }}>3</div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Inspection</span>
-            </div>
+                {/* Step 2 */}
+                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                  <div className={`step-circle ${activeStep >= 2 ? 'active' : 'pending'}`}>
+                    {activeStep > 2 ? <i className="bx bx-check"></i> : '2'}
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: activeStep >= 2 ? 700 : 600, textTransform: 'uppercase', color: activeStep >= 2 ? 'var(--text-primary)' : 'var(--text-muted)' }}>Fabrication</span>
+                </div>
 
-            {/* Step 4 */}
-            <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <div className="step-circle pending" style={{ fontSize: '0.8rem' }}>4</div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', color: 'var(--text-muted)' }}>Delivery</span>
-            </div>
-          </div>
+                {/* Step 3 */}
+                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                  <div className={`step-circle ${activeStep >= 3 ? 'active' : 'pending'}`}>
+                    {activeStep > 3 ? <i className="bx bx-check"></i> : '3'}
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: activeStep >= 3 ? 700 : 600, textTransform: 'uppercase', color: activeStep >= 3 ? 'var(--text-primary)' : 'var(--text-muted)' }}>Inspection</span>
+                </div>
+
+                {/* Step 4 */}
+                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                  <div className={`step-circle ${activeStep >= 4 ? 'active' : 'pending'}`}>
+                    {activeStep > 4 ? <i className="bx bx-check"></i> : '4'}
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: activeStep >= 4 ? 700 : 600, textTransform: 'uppercase', color: activeStep >= 4 ? 'var(--text-primary)' : 'var(--text-muted)' }}>Delivery</span>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
 

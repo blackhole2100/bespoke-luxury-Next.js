@@ -1506,6 +1506,10 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     transform: translateX(-50%);
     z-index: 9999;
     pointer-events: none;
+    width: calc(100% - 2rem);
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
 }
 .rf-toast {
     display: flex;
@@ -1518,12 +1522,14 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     box-shadow: var(--shadow-xl);
     font-size: 0.875rem;
     font-weight: 500;
-    min-width: 280px;
+    width: 100%;
+    min-width: 0;
     border-left: 4px solid var(--accent);
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s var(--ease-out);
     pointer-events: all;
+    word-break: break-word;
 }
 .rf-toast.show { opacity: 1; transform: translateY(0); }
 .rf-toast.error { border-left-color: #DC2626; }
@@ -1605,6 +1611,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     .mobile-only-action { display: block !important; }
     
     .header-nav { display: none; }
+    .mobile-menu-close { display: block !important; }
     .header-nav.mobile-open {
         display: flex;
         flex-direction: column;
