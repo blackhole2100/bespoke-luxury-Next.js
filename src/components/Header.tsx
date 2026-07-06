@@ -126,6 +126,67 @@ export const Header: React.FC = () => {
               <li><Link href={getNavLink('#reviews')} className="nav-link" onClick={handleNavClick}>Reviews</Link></li>
               <li><Link href={getNavLink('#contact')} className="nav-link" onClick={handleNavClick}>Contact</Link></li>
               <li><Link href="/product" className={`nav-link nav-cta ${pathname === '/product' ? 'active' : ''}`} onClick={handleNavClick}>Shop All</Link></li>
+              
+              {/* Mobile-only action inside navigation drawer */}
+              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '1.5rem', paddingTop: '1.5rem', listStyle: 'none' }}>
+                <div style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px' }}>
+                  {/* Currency Switcher */}
+                  <div className="currency-switcher-mobile-container" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flex: 1 }}>
+                    <select
+                      id="currency-select-mobile"
+                      value={currency}
+                      onChange={(e) => {
+                        setCurrency(e.target.value as Currency);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      aria-label="Select currency mobile"
+                      style={{
+                        width: '100%',
+                        background: 'var(--bg-primary)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '20px',
+                        padding: '8px 32px 8px 16px',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        color: 'var(--text-primary)',
+                        cursor: 'pointer',
+                        appearance: 'none',
+                        WebkitAppearance: 'none',
+                        outline: 'none',
+                      }}
+                    >
+                      <option value="INR">₹ INR</option>
+                      <option value="USD">$ USD</option>
+                      <option value="GBP">£ GBP</option>
+                    </select>
+                    <i className="bx bx-chevron-down" style={{ position: 'absolute', right: '12px', pointerEvents: 'none', fontSize: '1rem', color: 'var(--text-muted)' }}></i>
+                  </div>
+                  
+                  {/* Theme Toggle */}
+                  <button 
+                    className="icon-btn theme-toggle-mobile" 
+                    onClick={() => {
+                      toggleTheme();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg-primary)',
+                      color: 'var(--text-primary)',
+                      cursor: 'pointer'
+                    }}
+                    aria-label="Toggle theme mobile"
+                  >
+                    <i className={`bx ${theme === 'dark' ? 'bx-sun' : 'bx-moon'}`} style={{ fontSize: '1.2rem' }}></i>
+                  </button>
+                </div>
+              </li>
             </ul>
           </nav>
 
@@ -167,7 +228,7 @@ export const Header: React.FC = () => {
             </button>
 
             {/* Currency Switcher */}
-            <div className="currency-switcher" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+            <div className="currency-switcher desktop-only-action" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
               <select
                 id="currency-select"
                 value={currency}
@@ -197,7 +258,7 @@ export const Header: React.FC = () => {
 
             {/* Theme Toggle */}
             <button 
-              className="icon-btn" 
+              className="icon-btn desktop-only-action" 
               onClick={toggleTheme}
               aria-label="Toggle theme"
             >

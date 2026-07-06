@@ -1328,6 +1328,13 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 }
 .rf-input-group textarea { resize: vertical; min-height: 130px; }
 
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
 /* ============================================================
    FOOTER
    ============================================================ */
@@ -1348,7 +1355,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     height: 36px;
     width: auto;
     margin-bottom: 1.25rem;
-    filter: brightness(0) invert(1);
+    filter: invert(1);
+    mix-blend-mode: screen;
 }
 .footer-brand .logo-text-fallback {
     font-family: var(--font-display);
@@ -1449,7 +1457,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     font-size: 0.8rem;
     color: rgba(255,255,255,0.4);
 }
-.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
 .footer-legal a { color: rgba(255,255,255,0.4); transition: color var(--transition); }
 .footer-legal a:hover { color: var(--accent-light); }
 
@@ -1578,8 +1586,13 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     z-index: 998;
 }
 .nav-overlay.open { display: block; }
+/* Custom utility classes for responsive header layout */
+.mobile-only-action { display: none !important; }
 
 @media (max-width: 1024px) {
+    .desktop-only-action { display: none !important; }
+    .mobile-only-action { display: block !important; }
+    
     .header-nav { display: none; }
     .header-nav.mobile-open {
         display: flex;

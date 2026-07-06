@@ -448,7 +448,7 @@ export default function Home() {
                   setSubmittingBooking(false);
                 }
               }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <div className="form-row">
                   <div className="rf-input-group">
                     <label htmlFor="b-name">Full Name *</label>
                     <input id="b-name" type="text" value={bName} onChange={(e) => setBName(e.target.value)} placeholder="Eleanor Voss" required />
@@ -470,7 +470,7 @@ export default function Home() {
                     <option value="home-visit">Home Visit</option>
                   </select>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                <div className="form-row">
                   <div className="rf-input-group">
                     <label htmlFor="b-date">Preferred Date *</label>
                     <input id="b-date" type="date" value={bDate} onChange={(e) => setBDate(e.target.value)} min={new Date().toISOString().split('T')[0]} required />
