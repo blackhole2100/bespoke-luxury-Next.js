@@ -410,6 +410,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 
 /* Mobile menu toggle */
 .mobile-menu-toggle { display: none; }
+.mobile-menu-close { display: none; }
 
 /* ============================================================
    CART SIDEBAR
@@ -1506,10 +1507,6 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     transform: translateX(-50%);
     z-index: 9999;
     pointer-events: none;
-    width: calc(100% - 2rem);
-    max-width: 420px;
-    display: flex;
-    justify-content: center;
 }
 .rf-toast {
     display: flex;
@@ -1522,14 +1519,12 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     box-shadow: var(--shadow-xl);
     font-size: 0.875rem;
     font-weight: 500;
-    width: 100%;
-    min-width: 0;
+    min-width: 280px;
     border-left: 4px solid var(--accent);
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s var(--ease-out);
     pointer-events: all;
-    word-break: break-word;
 }
 .rf-toast.show { opacity: 1; transform: translateY(0); }
 .rf-toast.error { border-left-color: #DC2626; }
@@ -1609,9 +1604,9 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 @media (max-width: 1024px) {
     .desktop-only-action { display: none !important; }
     .mobile-only-action { display: block !important; }
+    .mobile-menu-close { display: block !important; }
     
     .header-nav { display: none; }
-    .mobile-menu-close { display: block !important; }
     .header-nav.mobile-open {
         display: flex;
         flex-direction: column;
@@ -1669,6 +1664,23 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     .gallery-masonry { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
     .about-stats { grid-template-columns: 1fr; }
+    
+    /* Responsive toast notification overrides */
+    .toast-wrapper {
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+        padding: 0 1.25rem !important;
+        bottom: 1.5rem !important;
+        box-sizing: border-box !important;
+    }
+    .rf-toast {
+        min-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        font-size: 0.8rem !important;
+        padding: 12px 16px !important;
+    }
 }
 
 /* ============================================================

@@ -167,26 +167,9 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
               </div>
 
               {!user && (
-                <div style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)', borderRadius: '8px', padding: '1.25rem', textAlign: 'center', margin: '15px 0' }}>
-                  <i className="bx bx-lock-alt" style={{ fontSize: '1.5rem', color: 'var(--accent)', marginBottom: '8px', display: 'block' }}></i>
-                  <p style={{ color: 'var(--text-primary)', fontSize: '0.9rem', fontWeight: 600, margin: '0 0 6px 0' }}>
-                    Sign In Required
-                  </p>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.78rem', margin: '0 0 1.25rem 0', lineHeight: '1.4' }}>
-                    Please login or create an account to proceed with your order checkout.
-                  </p>
-                  <button 
-                    type="button"
-                    className="btn-primary-solid" 
-                    onClick={() => {
-                      onClose();
-                      router.push('/signup');
-                    }}
-                    style={{ fontSize: '0.75rem', padding: '8px 18px', textTransform: 'uppercase', width: '100%' }}
-                  >
-                    Login or Register
-                  </button>
-                </div>
+                <p style={{ color: '#dc3545', fontSize: '0.8rem', marginTop: '10px' }}>
+                  * You must sign in or create an account to finalize your order.
+                </p>
               )}
 
               <div style={{ display: 'flex', gap: '10px', marginTop: '1.5rem' }}>
@@ -209,13 +192,27 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
               <span className="cart-total-price">{formatPrice(subtotal)}</span>
             </div>
             <p className="cart-tax-note">Taxes &amp; delivery calculated at checkout</p>
-            <button
-              className="btn-primary-solid"
-              style={{ width: '100%', display: 'block', textTransform: 'uppercase', letterSpacing: '1px' }}
-              onClick={() => setIsCheckingOut(true)}
-            >
-              Proceed to Checkout
-            </button>
+            {user ? (
+              <button
+                className="btn-primary-solid"
+                style={{ width: '100%', display: 'block', textTransform: 'uppercase', letterSpacing: '1px' }}
+                onClick={() => setIsCheckingOut(true)}
+              >
+                Proceed to Checkout
+              </button>
+            ) : (
+              <button
+                className="btn-primary-solid"
+                style={{ width: '100%', display: 'block', textTransform: 'uppercase', letterSpacing: '1px', background: 'var(--text-secondary)' }}
+                onClick={() => {
+                  showToast('Please sign in or register to complete your checkout.', true);
+                  onClose();
+                  router.push('/signup?redirect=checkout');
+                }}
+              >
+                Sign In to Checkout
+              </button>
+            )}
           </div>
         )}
       </aside>

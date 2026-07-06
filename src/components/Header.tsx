@@ -46,13 +46,14 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Collapse the hero top margin when announcement banner is hidden
+  // Dynamically synchronize the announcement height layout space on the html element
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty(
-        '--announcement-h',
-        isAnnouncementVisible ? '40px' : '0px'
-      );
+    const root = document.documentElement;
+    if (isAnnouncementVisible) {
+      // 40px is the standard height of the announcement bar
+      root.style.setProperty('--announcement-h', '40px');
+    } else {
+      root.style.setProperty('--announcement-h', '0px');
     }
   }, [isAnnouncementVisible]);
 
@@ -128,19 +129,20 @@ export const Header: React.FC = () => {
           </div>
 
           <nav className={`header-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`} id="header-nav">
-            {/* Close Button inside Drawer */}
+            {/* Close Button for Mobile Navigation Drawer */}
             <button 
               className="mobile-menu-close" 
               onClick={() => setIsMobileMenuOpen(false)}
               aria-label="Close menu"
               style={{
                 position: 'absolute',
-                top: '1.25rem',
-                right: '1.5rem',
+                top: '20px',
+                right: '20px',
                 fontSize: '1.8rem',
                 color: 'var(--text-primary)',
                 cursor: 'pointer',
-                display: 'none' // Controlled in responsive CSS
+                border: 'none',
+                background: 'none'
               }}
             >
               <i className="bx bx-x"></i>
@@ -382,6 +384,12 @@ export const Header: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {/* Mobile Menu Nav Overlay */}
+      <div 
+        className={`nav-overlay ${isMobileMenuOpen ? 'open' : ''}`} 
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
 
       {/* Cart Sidebar Drawer */}
       <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
