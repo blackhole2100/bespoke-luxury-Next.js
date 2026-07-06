@@ -10,6 +10,14 @@ The user experience matches the brand's luxury identity, following a **"Luxe Min
 *   **Typography**: *Cormorant Garamond* (an elegant, serif display font) for headings paired with *DM Sans* (a clean, modern sans-serif) for body copies.
 *   **Aesthetics**: Glassmorphic sticky menus, micro-animations, lazy loading grids, and a native Dark/Light theme toggle synced with local storage.
 
+### 🌟 Exclusive Features
+1. **Multi-Currency Engine**: Real-time currency conversions between `₹ INR`, `$ USD`, and `£ GBP` formatted with local currency formats.
+2. **Design Consultation Scheduler**: Customers can request design consultations (In-Store, Virtual, or Home Visit) with an interactive form, managed by admins in the dashboard.
+3. **Reviews & Rating Engine**: Integrated verified customer review feeds and star rating forms directly on product detailed pages.
+4. **Dynamic Order Tracker**: Interactive timeline progress bar reflecting order fabrication, inspection, and delivery steps dynamically synced from database status updates.
+5. **Single-Page Printable Invoices**: Print-media optimized receipt styling ensuring neat, compact outputs.
+6. **Robust Responsive Elements**: Fixed inconsistent header spacing gaps dynamically, optimized toast messages, and added backdrop overlays and close icons to the mobile menu drawer.
+
 ---
 
 ## 🏗️ System Architecture
