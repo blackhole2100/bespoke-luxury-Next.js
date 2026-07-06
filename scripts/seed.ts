@@ -1,11 +1,4 @@
 import { loadEnvConfig } from '@next/env';
-// Load environment variables before importing database connection
-loadEnvConfig(process.cwd());
-
-import dbConnect from '../src/lib/dbConnect';
-import Product from '../src/models/Product';
-import User from '../src/models/User';
-import bcrypt from 'bcryptjs';
 
 const SEED_PRODUCTS = [
   {
@@ -62,11 +55,11 @@ const SEED_PRODUCTS = [
     price: 72000,
     originalPrice: null,
     image: '/images/p5.png',
-    description: 'An industrial luxury club chair utilizing bent steel chrome pipes and premium black matte grain leather cushioning.',
+    description: 'A luxury reproduction of mid-century chrome framing featuring hand-tufted tan premium leather wraps.',
     isNew: false,
     badge: null,
-    stock: 6,
-    ratings: { average: 4.7, count: 87 }
+    stock: 7,
+    ratings: { average: 4.7, count: 68 }
   },
   {
     name: 'Seraphina Modular Linen Sectional',
@@ -74,38 +67,38 @@ const SEED_PRODUCTS = [
     price: 320000,
     originalPrice: null,
     image: '/images/p6.png',
-    description: 'Deep-seated modular lounge configuration upholstered in stain-resistant heavy linen, customizable to fit any architectural layout.',
+    description: 'A massive, modular, deep-seated sectional sofa upholstered in stain-resistant heavy Belgian flax linen.',
     isNew: false,
     badge: null,
     stock: 4,
-    ratings: { average: 4.9, count: 201 }
+    ratings: { average: 4.8, count: 145 }
   },
   {
-    name: 'Monceau Luxe Linen Sofa with Pillows',
+    name: 'Monceau Slipcover Sofa',
     category: 'sofa',
-    price: 115000,
-    originalPrice: 230000,
+    price: 165000,
+    originalPrice: 195000,
     image: '/images/p9.png',
-    description: 'An elegant chalk-white slipcovered sofa in premium linen-blend, featuring down-blend cushions for deep, relaxed comfort.',
+    description: 'An elegant slipcover sofa designed for comfort, featuring a washable high-density cotton cover and feather-filled cushions.',
     isNew: false,
     badge: 'sale',
-    stock: 14,
-    ratings: { average: 4.8, count: 155 }
+    stock: 10,
+    ratings: { average: 4.7, count: 98 }
   },
   {
-    name: 'Toscana Walnut Entryway Credenza',
-    category: 'other',
-    price: 95000,
-    originalPrice: 190000,
+    name: 'Ophelia Curved Bouclé Sofa',
+    category: 'sofa',
+    price: 215000,
+    originalPrice: null,
     image: '/images/p10.png',
-    description: 'Artisanal sideboard crafted from solid American black walnut. Features soft-close sliding doors and adjustable internal shelving.',
-    isNew: false,
-    badge: 'sale',
-    stock: 15,
-    ratings: { average: 4.9, count: 62 }
+    description: 'An artful organic sofa offering fluid lines and premium textured ivory bouclé, standing on solid oak cylindrical legs.',
+    isNew: true,
+    badge: 'new',
+    stock: 6,
+    ratings: { average: 4.9, count: 84 }
   },
   {
-    name: 'Sienna Curved Oak Accent Chair',
+    name: 'Grasse Organic Oak Accent Chair',
     category: 'chair',
     price: 45000,
     originalPrice: 90000,
@@ -144,8 +137,16 @@ const SEED_PRODUCTS = [
 
 async function seed() {
   try {
+    console.log('Loading environment configurations...');
+    await loadEnvConfig(process.cwd());
+
     console.log('Connecting to database...');
-    process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/royal-furniture';
+    // Dynamically import Mongoose database dependencies after environment variables are loaded
+    const dbConnect = (await import('../src/lib/dbConnect')).default;
+    const Product = (await import('../src/models/Product')).default;
+    const User = (await import('../src/models/User')).default;
+    const bcrypt = (await import('bcryptjs')).default;
+
     await dbConnect();
     
     // Seed Products
