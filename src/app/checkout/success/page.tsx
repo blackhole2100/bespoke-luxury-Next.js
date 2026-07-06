@@ -76,9 +76,45 @@ function OrderSuccessContent() {
     <>
       <style>{`
         @media print {
-          .no-print { display: none !important; }
-          .invoice-wrapper { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 0 !important; }
-          body { background: white !important; color: black !important; }
+          .no-print, .site-header, .site-footer, header, footer, #scroll-progress, .announcement-bar { display: none !important; }
+          .invoice-wrapper { 
+            box-shadow: none !important; 
+            border: none !important; 
+            margin: 0 !important; 
+            padding: 0 !important;
+            max-width: 100% !important;
+          }
+          body { 
+            background: white !important; 
+            color: black !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+          }
+          /* Tighten spacing for compact single-page print */
+          .invoice-wrapper > div:first-child {
+            padding: 1.25rem 1.5rem !important;
+          }
+          .invoice-wrapper > div:nth-child(2) {
+            padding: 1.25rem 1.5rem !important;
+            gap: 1.5rem !important;
+          }
+          table {
+            margin-top: 0.5rem !important;
+          }
+          th, td {
+            padding: 6px 8px !important;
+          }
+          td img {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .invoice-wrapper > div:nth-child(4) {
+            padding: 1rem 1.5rem !important;
+          }
+          .invoice-wrapper > div:last-child {
+            padding: 1.25rem 1.5rem !important;
+          }
         }
         .step-circle {
           width: 32px; height: 32px;
