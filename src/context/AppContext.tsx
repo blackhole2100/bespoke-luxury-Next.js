@@ -246,6 +246,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }}
     >
       {children}
+      
+      {/* Global Toast Notifications Banner */}
+      <div className="toast-wrapper">
+        <div className={`rf-toast ${toast.show ? 'show' : ''} ${toast.isError ? 'error' : ''}`}>
+          <i className={`bx ${toast.isError ? 'bx-error-circle' : 'bx-check-circle'} toast-icon`}></i>
+          <span>{toast.message}</span>
+          <button 
+            onClick={hideToast} 
+            className="icon-btn" 
+            style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+            aria-label="Close notification"
+          >
+            <i className="bx bx-x" style={{ fontSize: '1.2rem' }}></i>
+          </button>
+        </div>
+      </div>
     </AppContext.Provider>
   );
 };
