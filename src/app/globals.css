@@ -1305,7 +1305,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     color: var(--text-secondary);
     margin-bottom: 8px;
 }
-.rf-input-group input,
+.rf-input-group input:not([type="checkbox"]),
 .rf-input-group textarea,
 .rf-input-group select {
     width: 100%;
@@ -1320,7 +1320,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     outline: none;
     appearance: none;
 }
-.rf-input-group input:focus,
+.rf-input-group input:not([type="checkbox"]):focus,
 .rf-input-group textarea:focus,
 .rf-input-group select:focus {
     border-color: var(--accent);

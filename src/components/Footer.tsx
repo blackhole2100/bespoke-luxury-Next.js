@@ -93,8 +93,8 @@ export const Footer: React.FC = () => {
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} Royal Furniture Co. All Rights Reserved.</p>
         <div className="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/terms">Terms of Service</Link>
           <a href="#">Sitemap</a>
           <Link href="/admin/login" className="admin-link" style={{ opacity: 0.5 }}>Admin</Link>
         </div>

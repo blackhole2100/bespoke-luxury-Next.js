@@ -360,8 +360,8 @@ export default function AuthPage() {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                 />
                 <span style={{ fontSize: '0.84rem' }}>
-                  I agree to the <a href="#" className="form-link">Terms of Service</a> and{' '}
-                  <a href="#" className="form-link">Privacy Policy</a>
+                  I agree to the <Link href="/terms" className="form-link">Terms of Service</Link> and{' '}
+                  <Link href="/privacy" className="form-link">Privacy Policy</Link>
                 </span>
               </label>
             </div>
