@@ -309,7 +309,7 @@ export default function Home() {
               <p>Fetching collection from database...</p>
             </div>
           ) : filteredProducts.length === 0 ? (
-            <p style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--text-muted)', padding: '3rem;' }}>
+            <p style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--text-muted)', padding: '3rem' }}>
               No products found.
             </p>
           ) : (
