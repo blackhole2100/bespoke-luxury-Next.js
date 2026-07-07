@@ -88,11 +88,11 @@ export default function CustomerOrdersPage() {
   return (
     <>
       <Header />
-      <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', padding: '8rem 2rem 5rem' }}>
+      <main className="orders-container" style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', padding: '8rem 2rem 5rem' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           
           {/* Header Banner */}
-          <div style={{ marginBottom: '3rem', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
+          <div className="orders-header" style={{ marginBottom: '3rem', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
             <span style={{ color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '3px', fontSize: '0.8rem', fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>
               Client Console
             </span>
@@ -157,8 +157,8 @@ export default function CustomerOrdersPage() {
                   >
                     
                     {/* Card Top Information Bar */}
-                    <div style={{ background: 'var(--bg-tertiary)', padding: '1.5rem 2rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                      <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+                    <div className="order-card-header" style={{ background: 'var(--bg-tertiary)', padding: '1.5rem 2rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div className="order-header-info-cols" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
                         <div>
                           <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>Date Placed</span>
                           <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>{dateString}</span>
@@ -191,11 +191,12 @@ export default function CustomerOrdersPage() {
                     </div>
 
                     {/* Card Body - Items List */}
-                    <div style={{ padding: '2rem' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div className="order-card-body" style={{ padding: '2rem' }}>
+                      <div className="order-items-list" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {order.items.map((item, idx) => (
                           <div 
                             key={idx} 
+                            className="order-item-row"
                             style={{ 
                               display: 'flex', 
                               alignItems: 'center', 
@@ -229,7 +230,7 @@ export default function CustomerOrdersPage() {
                       </div>
 
                       {/* Action Row */}
-                      <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end' }}>
+                      <div className="order-card-actions" style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'flex-end' }}>
                         <Link 
                           href={`/checkout/success?orderId=${order._id}`}
                           className="track-invoice-btn"

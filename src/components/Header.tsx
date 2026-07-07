@@ -31,6 +31,7 @@ export const Header: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [startAtCheckout, setStartAtCheckout] = useState(false);
 
   // Checkout URL Param handler to open cart sidebar automatically
   useEffect(() => {
@@ -38,6 +39,7 @@ export const Header: React.FC = () => {
       const params = new URLSearchParams(window.location.search);
       if (params.get('checkout') === 'true') {
         setIsCartOpen(true);
+        setStartAtCheckout(true);
         // Clean URL params so it doesn't trigger repeatedly
         const newUrl = window.location.pathname;
         window.history.replaceState({}, '', newUrl);
@@ -494,7 +496,14 @@ export const Header: React.FC = () => {
       ></div>
 
       {/* Cart Sidebar Drawer */}
-      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartSidebar 
+        isOpen={isCartOpen} 
+        onClose={() => {
+          setIsCartOpen(false);
+          setStartAtCheckout(false);
+        }} 
+        startAtCheckout={startAtCheckout}
+      />
 
       {/* Wishlist Drawer */}
       <WishlistModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />

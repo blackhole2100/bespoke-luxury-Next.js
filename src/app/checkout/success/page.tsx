@@ -138,7 +138,7 @@ function OrderSuccessContent() {
       `}</style>
 
       {/* Luxury Brand Greeting Banner */}
-      <div className="no-print" style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)', padding: '5rem 2rem 4rem', textAlign: 'center' }}>
+      <div className="no-print success-banner" style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)', padding: '5rem 2rem 4rem', textAlign: 'center' }}>
         <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <span style={{ textTransform: 'uppercase', letterSpacing: '3px', fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent)', display: 'block', marginBottom: '0.75rem' }}>
             Order Completed Successfully
@@ -164,10 +164,10 @@ function OrderSuccessContent() {
             const connectorWidth = isDelivery ? '80%' : (isInspection ? '53%' : (isFabrication ? '26%' : '0%'));
 
             return (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '560px', margin: '0 auto', position: 'relative', padding: '0 1rem' }}>
+              <div className="stepper-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: '560px', margin: '0 auto', position: 'relative', padding: '0 1rem' }}>
                 {/* Horizontal Connector Line */}
-                <div style={{ position: 'absolute', top: '16px', left: '10%', right: '10%', height: '2px', background: 'var(--border)', zIndex: 1 }} />
-                <div style={{ 
+                <div className="connector-line" style={{ position: 'absolute', top: '16px', left: '10%', right: '10%', height: '2px', background: 'var(--border)', zIndex: 1 }} />
+                <div className="connector-line" style={{ 
                   position: 'absolute', 
                   top: '16px', 
                   left: '10%', 
@@ -179,33 +179,33 @@ function OrderSuccessContent() {
                 }} />
 
                 {/* Step 1: Confirmed */}
-                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div className="step-circle-col" style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <div className="step-circle active"><i className="bx bx-check"></i></div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-primary)' }}>Confirmed</span>
+                  <span className="step-label" style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-primary)' }}>Confirmed</span>
                 </div>
-
+ 
                 {/* Step 2: Fabrication */}
-                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div className="step-circle-col" style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <div className={isFabrication || step2Active ? 'step-circle active' : 'step-circle pending'} style={{ fontSize: '0.8rem' }}>
                     {isInspection ? <i className="bx bx-check"></i> : '2'}
                   </div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: isFabrication || step2Active ? 700 : 600, textTransform: 'uppercase', color: isFabrication || step2Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Fabrication</span>
+                  <span className="step-label" style={{ fontSize: '0.75rem', fontWeight: isFabrication || step2Active ? 700 : 600, textTransform: 'uppercase', color: isFabrication || step2Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Fabrication</span>
                 </div>
-
+ 
                 {/* Step 3: Inspection */}
-                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div className="step-circle-col" style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <div className={isInspection || step3Active ? 'step-circle active' : 'step-circle pending'} style={{ fontSize: '0.8rem' }}>
                     {isDelivery ? <i className="bx bx-check"></i> : '3'}
                   </div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: isInspection || step3Active ? 700 : 600, textTransform: 'uppercase', color: isInspection || step3Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Inspection</span>
+                  <span className="step-label" style={{ fontSize: '0.75rem', fontWeight: isInspection || step3Active ? 700 : 600, textTransform: 'uppercase', color: isInspection || step3Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Inspection</span>
                 </div>
-
+ 
                 {/* Step 4: Delivery */}
-                <div style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div className="step-circle-col" style={{ position: 'relative', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <div className={isDelivery || step4Active ? 'step-circle active' : 'step-circle pending'} style={{ fontSize: '0.8rem' }}>
                     {isDelivery ? <i className="bx bx-check"></i> : '4'}
                   </div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: isDelivery || step4Active ? 700 : 600, textTransform: 'uppercase', color: isDelivery || step4Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Delivery</span>
+                  <span className="step-label" style={{ fontSize: '0.75rem', fontWeight: isDelivery || step4Active ? 700 : 600, textTransform: 'uppercase', color: isDelivery || step4Active ? 'var(--text-primary)' : 'var(--text-muted)' }}>Delivery</span>
                 </div>
               </div>
             );
@@ -214,7 +214,7 @@ function OrderSuccessContent() {
       </div>
 
       {/* Invoice Document Wrapper */}
-      <div style={{ maxWidth: '860px', margin: '3rem auto', padding: '0 1.5rem 5rem' }}>
+      <div className="invoice-container" style={{ maxWidth: '860px', margin: '3rem auto', padding: '0 1.5rem 5rem' }}>
         <div className="invoice-wrapper" style={{
           background: 'var(--bg-primary)',
           border: '1px solid var(--border)',
@@ -223,7 +223,7 @@ function OrderSuccessContent() {
           boxShadow: 'var(--shadow-lg, 0 12px 40px rgba(0,0,0,0.06))',
         }}>
           {/* Invoice Header */}
-          <div style={{ background: 'var(--bg-secondary)', padding: '3rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
+          <div className="invoice-header" style={{ background: 'var(--bg-secondary)', padding: '3rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/logo.png" alt="Royal Furniture" style={{ height: '40px', marginBottom: '12px' }} onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
@@ -254,7 +254,7 @@ function OrderSuccessContent() {
 
           {/* Billing & Shipping Columns */}
           {order?.shippingAddress && (
-            <div style={{ padding: '2.5rem 3rem', borderBottom: '1px solid var(--border)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2.5rem' }}>
+            <div className="invoice-details" style={{ padding: '2.5rem 3rem', borderBottom: '1px solid var(--border)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2.5rem' }}>
               <div>
                 <h4 style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '12px' }}>
                   Customer Details
@@ -275,7 +275,7 @@ function OrderSuccessContent() {
           )}
 
           {/* Itemized Table */}
-          <div style={{ padding: '0 3rem' }}>
+          <div className="invoice-table-wrapper" style={{ padding: '0 3rem', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1.5rem' }}>
               <thead>
                 <tr style={{ borderBottom: '2.5px solid var(--border)' }}>
@@ -311,7 +311,7 @@ function OrderSuccessContent() {
           </div>
 
           {/* Totals Summary */}
-          <div style={{ padding: '2rem 3rem 3rem', display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="invoice-summary" style={{ padding: '2rem 3rem 3rem', display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{ width: '280px' }}>
               {[
                 { label: 'Subtotal', value: formatPrice(order?.totalAmount || 0) },
@@ -331,7 +331,7 @@ function OrderSuccessContent() {
           </div>
 
           {/* Quality Guarantee Details */}
-          <div style={{ background: 'var(--bg-secondary)', padding: '2rem 3rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
+          <div className="invoice-guarantee" style={{ background: 'var(--bg-secondary)', padding: '2rem 3rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
             <h5 style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-primary)', marginBottom: '8px' }}>
               Artisanal Guarantee & Support
             </h5>
@@ -344,7 +344,7 @@ function OrderSuccessContent() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="no-print" style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
+        <div className="no-print invoice-actions" style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', marginTop: '2.5rem', flexWrap: 'wrap' }}>
           <button
             onClick={handlePrint}
             className="btn-primary-solid"

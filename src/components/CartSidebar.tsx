@@ -8,9 +8,10 @@ import { useRouter } from 'next/navigation';
 interface CartSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  startAtCheckout?: boolean;
 }
 
-export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
+export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, startAtCheckout }) => {
   const { cart, removeFromCart, updateCartQty, clearCart, user, showToast, formatPrice } = useApp();
   const router = useRouter();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -34,13 +35,14 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
 
   // Monitor checkout redirect param to automatically show the checkout form
   React.useEffect(() => {
-    if (isOpen && typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('checkout') === 'true') {
+    if (isOpen) {
+      if (startAtCheckout) {
         setIsCheckingOut(true);
+      } else {
+        setIsCheckingOut(false);
       }
     }
-  }, [isOpen]);
+  }, [isOpen, startAtCheckout]);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 

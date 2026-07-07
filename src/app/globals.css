@@ -2117,3 +2117,147 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     box-shadow: 0 0 0 3px var(--accent-bg);
 }
 .rf-input-group textarea { resize: vertical; min-height: 100px; }
+
+/* Responsive adjustments for Orders History and Success/Invoice Pages (320px - 2560px) */
+
+/* Large viewports scaling */
+@media (min-width: 1440px) {
+    .orders-container, .invoice-container {
+        padding: 10rem 2rem 6rem !important;
+    }
+}
+
+/* Tablet viewports and smaller */
+@media (max-width: 1024px) {
+    .orders-container {
+        padding: 7rem 2rem 4rem !important;
+    }
+    .invoice-container {
+        margin: 2rem auto !important;
+        padding: 0 1.25rem 4rem !important;
+    }
+    .invoice-header, .invoice-details, .invoice-summary, .invoice-guarantee {
+        padding: 2rem !important;
+    }
+    .invoice-table-wrapper {
+        padding: 0 2rem !important;
+    }
+}
+
+/* Mobile viewports and smaller */
+@media (max-width: 768px) {
+    .orders-container {
+        padding: 6rem 1.25rem 3rem !important;
+    }
+    .orders-header {
+        margin-bottom: 2rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    .order-card-header {
+        padding: 1.25rem 1.5rem !important;
+    }
+    .order-card-body {
+        padding: 1.5rem !important;
+    }
+    .order-header-info-cols {
+        gap: 1.25rem !important;
+    }
+    .invoice-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1.5rem !important;
+        padding: 1.75rem 1.5rem !important;
+    }
+    .invoice-header div:last-child {
+        text-align: left !important;
+    }
+    .invoice-details {
+        grid-template-columns: 1fr !important;
+        gap: 1.75rem !important;
+        padding: 1.75rem 1.5rem !important;
+    }
+    .invoice-table-wrapper {
+        padding: 0 1.5rem !important;
+    }
+    .invoice-summary {
+        padding: 1.75rem 1.5rem 2rem !important;
+        justify-content: flex-start !important;
+    }
+    .invoice-summary > div {
+        width: 100% !important;
+    }
+    .invoice-guarantee {
+        padding: 1.75rem 1.5rem !important;
+    }
+}
+
+/* Extreme mobile viewports (320px - 480px) */
+@media (max-width: 480px) {
+    .orders-container {
+        padding: 5rem 1rem 2.5rem !important;
+    }
+    .orders-header h1 {
+        font-size: 1.8rem !important;
+    }
+    .order-card-header {
+        padding: 1rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    .order-header-info-cols {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+    .order-card-body {
+        padding: 1rem !important;
+    }
+    .order-item-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    .order-item-row div:last-child {
+        text-align: left !important;
+        margin-top: 4px !important;
+    }
+    .order-card-actions {
+        margin-top: 1.75rem !important;
+        padding-top: 1.25rem !important;
+    }
+    .track-invoice-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    .stepper-container {
+        padding: 0 !important;
+    }
+    .step-circle {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.7rem !important;
+    }
+    .step-label {
+        font-size: 0.62rem !important;
+    }
+    .connector-line {
+        top: 14px !important;
+    }
+    .success-banner {
+        padding: 4rem 1.25rem 3rem !important;
+    }
+    .invoice-container {
+        margin: 1rem auto !important;
+        padding: 0 0.75rem 3rem !important;
+    }
+    .invoice-header, .invoice-details, .invoice-table-wrapper, .invoice-summary, .invoice-guarantee {
+        padding: 1.25rem 1rem !important;
+    }
+    .invoice-header h2 {
+        font-size: 1.75rem !important;
+    }
+    .invoice-actions button, .invoice-actions a {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
