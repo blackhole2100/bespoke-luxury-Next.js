@@ -32,6 +32,19 @@ export const Header: React.FC = () => {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
+  // Checkout URL Param handler to open cart sidebar automatically
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('checkout') === 'true') {
+        setIsCartOpen(true);
+        // Clean URL params so it doesn't trigger repeatedly
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, '', newUrl);
+      }
+    }
+  }, []);
+
   // Monitor Scroll for Sticky Header styling
   useEffect(() => {
     const handleScroll = () => {
@@ -129,35 +142,125 @@ export const Header: React.FC = () => {
           </div>
 
           <nav className={`header-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`} id="header-nav">
-            {/* Close Button for Mobile Navigation Drawer */}
-            <button 
-              className="mobile-menu-close" 
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close menu"
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '20px',
-                fontSize: '1.8rem',
-                color: 'var(--text-primary)',
-                cursor: 'pointer',
-                border: 'none',
-                background: 'none'
-              }}
-            >
-              <i className="bx bx-x"></i>
-            </button>
+            {/* Header section of the mobile nav */}
+            <div className="mobile-menu-header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', letterSpacing: '3px', fontWeight: 600, color: 'var(--accent)' }}>ELEGANT</span>
+                <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-muted)' }}>Furniture Hub</span>
+              </div>
+              <button 
+                className="mobile-menu-close" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close menu"
+                style={{
+                  fontSize: '1.8rem',
+                  color: 'var(--text-primary)',
+                  cursor: 'pointer',
+                  border: 'none',
+                  background: 'none'
+                }}
+              >
+                <i className="bx bx-x"></i>
+              </button>
+            </div>
+            
+            {/* Main Links */}
             <ul>
-              <li><Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={handleNavClick}>Home</Link></li>
-              <li><Link href={getNavLink('#about')} className="nav-link" onClick={handleNavClick}>Story</Link></li>
-              <li><Link href={getNavLink('#product')} className="nav-link" onClick={handleNavClick}>Collection</Link></li>
-              <li><Link href={getNavLink('#gallery')} className="nav-link" onClick={handleNavClick}>Gallery</Link></li>
-              <li><Link href={getNavLink('#reviews')} className="nav-link" onClick={handleNavClick}>Reviews</Link></li>
-              <li><Link href={getNavLink('#contact')} className="nav-link" onClick={handleNavClick}>Contact</Link></li>
-              <li><Link href="/product" className={`nav-link nav-cta ${pathname === '/product' ? 'active' : ''}`} onClick={handleNavClick}>Shop All</Link></li>
+              <li>
+                <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={handleNavClick}>
+                  <i className="bx bx-home mobile-nav-icon"></i>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href={getNavLink('#about')} className="nav-link" onClick={handleNavClick}>
+                  <i className="bx bx-book-open mobile-nav-icon"></i>
+                  Story
+                </Link>
+              </li>
+              <li>
+                <Link href={getNavLink('#product')} className="nav-link" onClick={handleNavClick}>
+                  <i className="bx bx-grid-alt mobile-nav-icon"></i>
+                  Collection
+                </Link>
+              </li>
+              <li>
+                <Link href={getNavLink('#gallery')} className="nav-link" onClick={handleNavClick}>
+                  <i className="bx bx-image mobile-nav-icon"></i>
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href={getNavLink('#reviews')} className="nav-link" onClick={handleNavClick}>
+                  <i className="bx bx-message-square-detail mobile-nav-icon"></i>
+                  Reviews
+                </Link>
+              </li>
+              <li>
+                <Link href={getNavLink('#contact')} className="nav-link" onClick={handleNavClick}>
+                  <i className="bx bx-envelope mobile-nav-icon"></i>
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/product" className={`nav-link nav-cta ${pathname === '/product' ? 'active' : ''}`} onClick={handleNavClick}>
+                  <i className="bx bx-shopping-bag mobile-nav-icon" style={{ color: 'white' }}></i>
+                  Shop All
+                </Link>
+              </li>
               
-              {/* Mobile-only action inside navigation drawer */}
-              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '1.5rem', paddingTop: '1.5rem', listStyle: 'none' }}>
+              {/* User Account / Profile Section in Mobile Drawer */}
+              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '1.25rem', paddingTop: '1.25rem', listStyle: 'none' }}>
+                {user ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '0 8px 8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--accent-bg)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.95rem' }}>
+                        {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, textAlign: 'left' }}>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {user.name}
+                        </span>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {user.email}
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                      <Link 
+                        href="/orders" 
+                        style={{ flex: 1, padding: '8px 12px', background: 'var(--bg-tertiary)', border: '1px solid var(--border)', color: 'var(--text-primary)', textAlign: 'center', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}
+                        onClick={handleNavClick}
+                      >
+                        <i className="bx bx-receipt"></i> Orders
+                      </Link>
+                      <button 
+                        onClick={async () => {
+                          setIsMobileMenuOpen(false);
+                          await logout();
+                        }}
+                        style={{ flex: 1, padding: '8px 12px', background: 'rgba(220, 53, 69, 0.08)', border: '1px solid rgba(220, 53, 69, 0.15)', color: '#dc3545', textAlign: 'center', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', cursor: 'pointer' }}
+                      >
+                        <i className="bx bx-log-out"></i> Logout
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ padding: '0 8px 8px' }}>
+                    <Link 
+                      href="/signup" 
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '12px', background: 'var(--accent)', color: 'white', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}
+                      onClick={handleNavClick}
+                    >
+                      <i className="bx bx-user" style={{ fontSize: '1rem' }}></i>
+                      Login / Register
+                    </Link>
+                  </div>
+                )}
+              </li>
+
+              {/* Currency & Theme Toggles inside mobile menu */}
+              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '0.75rem', paddingTop: '1.25rem', listStyle: 'none' }}>
                 <div style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px' }}>
                   {/* Currency Switcher */}
                   <div className="currency-switcher-mobile-container" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flex: 1 }}>
@@ -313,8 +416,8 @@ export const Header: React.FC = () => {
                     style={{ fontSize: '0.8rem', fontWeight: 600, border: '1px solid var(--border)', borderRadius: '20px', padding: '4px 12px', display: 'flex', alignItems: 'center', gap: '5px' }}
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   >
-                    <i className="bx bx-user-circle" style={{ fontSize: '1.1rem' }}></i>
-                    <span style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <i className="bx bx-user-circle" style={{ fontSize: '1.1rem' , marginLeft: '5px'}}></i>
+                    <span style={{ maxWidth: '80px', overflow : 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {user.name.split(' ')[0]}
                     </span>
                   </button>
@@ -342,17 +445,16 @@ export const Header: React.FC = () => {
                       boxShadow: 'var(--shadow-sm)'
                     }}
                   >
-                    {user.role === 'admin' && (
-                      <li style={{ marginBottom: '8px' }}>
-                        <Link 
-                          href="/admin/dashboard" 
-                          style={{ color: 'var(--text-primary)', display: 'block', padding: '4px 10px', textDecoration: 'none', fontWeight: 600 }}
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
-                          <i className="bx bx-shield-quarter" style={{ marginRight: '6px' }}></i> Admin
-                        </Link>
-                      </li>
-                    )}
+                    {/* Admin links removed. Access admin panel directly from https://admin.elegant-furniture-hub.vercel.app/ */}
+                    <li style={{ marginBottom: '8px' }}>
+                      <Link 
+                        href="/orders" 
+                        style={{ color: 'var(--text-primary)', display: 'block', padding: '4px 10px', textDecoration: 'none', fontWeight: 600 }}
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <i className="bx bx-receipt" style={{ marginRight: '6px' }}></i> My Orders
+                      </Link>
+                    </li>
                     <li>
                       <button 
                         onClick={async () => {

@@ -11,6 +11,14 @@ export default function AuthPage() {
   
   // Tab State
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+  const [redirectParam, setRedirectParam] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      setRedirectParam(params.get('redirect'));
+    }
+  }, []);
 
   // Input states
   const [loginEmail, setLoginEmail] = useState('');
@@ -28,9 +36,13 @@ export default function AuthPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (user) {
-      router.push('/');
+      if (redirectParam === 'checkout') {
+        router.push('/?checkout=true');
+      } else {
+        router.push('/');
+      }
     }
-  }, [user, router]);
+  }, [user, router, redirectParam]);
 
   // Autofill if remembered
   useEffect(() => {
@@ -99,7 +111,11 @@ export default function AuthPage() {
           localStorage.removeItem('rf_rem_email');
         }
 
-        router.push('/');
+        if (redirectParam === 'checkout') {
+          router.push('/?checkout=true');
+        } else {
+          router.push('/');
+        }
       } else {
         showToast(data.error || 'Authentication failed.', true);
       }
@@ -136,7 +152,11 @@ export default function AuthPage() {
       if (data.success) {
         showToast('Registration successful! Logging you in...', false);
         setUser(data.user);
-        router.push('/');
+        if (redirectParam === 'checkout') {
+          router.push('/?checkout=true');
+        } else {
+          router.push('/');
+        }
       } else {
         showToast(data.error || 'Registration failed.', true);
       }

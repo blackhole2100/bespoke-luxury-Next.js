@@ -27,10 +27,20 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
   // Autofill form if user is logged in
   React.useEffect(() => {
     if (user) {
-      setFullName(user.name);
-      setEmail(user.email);
+      setFullName(user.name || '');
+      setEmail(user.email || '');
     }
   }, [user, isCheckingOut]);
+
+  // Monitor checkout redirect param to automatically show the checkout form
+  React.useEffect(() => {
+    if (isOpen && typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('checkout') === 'true') {
+        setIsCheckingOut(true);
+      }
+    }
+  }, [isOpen]);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 

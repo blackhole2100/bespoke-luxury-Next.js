@@ -91,12 +91,11 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Royal Furniture Co. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Elegant Furniture Hub. All Rights Reserved.</p>
         <div className="footer-legal">
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
           <a href="#">Sitemap</a>
-          <Link href="/admin/login" className="admin-link" style={{ opacity: 0.5 }}>Admin</Link>
         </div>
       </div>
     </footer>

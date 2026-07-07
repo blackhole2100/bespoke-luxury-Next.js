@@ -3,9 +3,14 @@ import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Royal Furniture | Luxury Living Since 2010",
-  description: "Royal Furniture — Luxury handcrafted furniture for the modern home. Explore our exclusive collection of sofas, chairs, and bespoke pieces.",
-  keywords: "luxury furniture, sofas, armchairs, handcrafted, Royal Furniture",
+  title: "Elegant Furniture Hub | Handcrafted Luxury Living",
+  description: "Elegant Furniture Hub — Luxury handcrafted furniture for the modern home. Explore our exclusive collection of sofas, chairs, and bespoke pieces.",
+  keywords: "elegant furniture hub, luxury furniture, sofas, armchairs, handcrafted, premium furniture",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
