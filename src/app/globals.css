@@ -333,6 +333,10 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     border-radius: var(--radius-sm);
     transition: all var(--transition);
     position: relative;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 .header-nav .nav-link:hover,
 .header-nav .nav-link.active { color: var(--text-primary); }
@@ -353,6 +357,10 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     padding: 8px 20px;
     border-radius: var(--radius-sm);
     margin-left: 0.5rem;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 .header-nav .nav-cta:hover {
     background: var(--accent-dark);
@@ -1600,8 +1608,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .nav-overlay.open { display: block; }
 /* Custom utility classes for responsive header layout */
 .mobile-only-action { display: none !important; }
-.mobile-menu-header { display: none; }
-.mobile-nav-icon { display: none; }
+.mobile-menu-header { display: none !important; }
+.mobile-nav-icon { display: none !important; }
 
 @media (max-width: 1024px) {
     .desktop-only-action { display: none !important; }
