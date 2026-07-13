@@ -128,18 +128,23 @@ export const Header: React.FC = () => {
       >
         <div className="header-inner">
           <div className="header-logo">
-            <Link href="/">
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/images/logo1.png" 
-                alt="Royal Furniture" 
+                alt="Elegant Furniture Hub" 
+                style={{ height: '36px', width: 'auto' }}
                 onError={(e) => {
                   (e.target as HTMLElement).style.display = 'none';
                   const sibling = (e.target as HTMLElement).nextElementSibling;
                   if (sibling) (sibling as HTMLElement).style.display = 'block';
                 }}
               />
-              <span className="logo-text-fallback" style={{ display: 'none' }}>ROYAL</span>
+              <span className="logo-text-fallback" style={{ display: 'none' }}>ELEGANT</span>
+              <div className="desktop-logo-text" style={{ display: 'flex', flexDirection: 'column', gap: '2px', textAlign: 'left', lineHeight: '1.1' }}>
+                <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', letterSpacing: '1.5px', fontWeight: 700, color: 'var(--text-primary)' }}>ELEGANT</span>
+                <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)' }}>Furniture Hub</span>
+              </div>
             </Link>
           </div>
 

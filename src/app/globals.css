@@ -1600,6 +1600,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .nav-overlay.open { display: block; }
 /* Custom utility classes for responsive header layout */
 .mobile-only-action { display: none !important; }
+.mobile-menu-header { display: none; }
+.mobile-nav-icon { display: none; }
 
 @media (max-width: 1024px) {
     .desktop-only-action { display: none !important; }
@@ -1678,6 +1680,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 
 @media (max-width: 768px) {
     :root { --announcement-h: 36px; }
+    .desktop-logo-text { display: none !important; }
     .hero-content { left: 5%; right: 5%; }
     .hero-title { font-size: clamp(2.2rem, 8vw, 3.5rem); }
     .trust-grid { grid-template-columns: 1fr; }
