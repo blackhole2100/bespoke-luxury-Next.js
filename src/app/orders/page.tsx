@@ -49,7 +49,20 @@ export default function CustomerOrdersPage() {
         <Header />
         <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ textAlign: 'center' }}>
-            <i className="bx bx-loader-alt bx-spin" style={{ fontSize: '3rem', color: 'var(--accent)', marginBottom: '1rem' }}></i>
+            <div style={{ position: 'relative', width: '70px', height: '70px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/logo1.png" alt="Loading" className="loading-logo-pulse" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+              <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes logoPulse {
+                  0% { opacity: 0.4; transform: scale(0.95); }
+                  50% { opacity: 1; transform: scale(1.05); }
+                  100% { opacity: 0.4; transform: scale(0.95); }
+                }
+                .loading-logo-pulse {
+                  animation: logoPulse 1.8s infinite ease-in-out;
+                }
+              `}} />
+            </div>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>Accessing purchase archives...</p>
           </div>
         </main>
@@ -65,12 +78,16 @@ export default function CustomerOrdersPage() {
         <Header />
         <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8rem 2rem 5rem' }}>
           <div style={{ maxWidth: '480px', width: '100%', background: 'var(--bg-primary)', border: '1px solid var(--border)', borderRadius: '16px', padding: '3rem 2.5rem', textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--accent-bg)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', fontSize: '1.8rem' }}>
-              <i className="bx bx-lock-alt"></i>
+            <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 1.5rem' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/logo1.png" alt="Access Restructured" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', border: '2px solid var(--bg-primary)' }}>
+                <i className="bx bx-lock-alt"></i>
+              </div>
             </div>
             <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', color: 'var(--text-primary)', marginBottom: '0.75rem' }}>Access Restructured</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-              Please sign in to your Royal Furniture account to access order tracking, invoices, and purchase history.
+              Please sign in to your Elegant Furniture Hub account to access order tracking, invoices, and purchase history.
             </p>
             <Link 
               href="/signup" 
@@ -107,8 +124,12 @@ export default function CustomerOrdersPage() {
           {/* Orders Content */}
           {orders.length === 0 ? (
             <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)', borderRadius: '16px', padding: '5rem 3rem', textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
-              <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: 'var(--bg-tertiary)', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', fontSize: '2rem' }}>
-                <i className="bx bx-receipt"></i>
+              <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 1.5rem' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/logo1.png" alt="No Purchases" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.6 }} />
+                <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', border: '2px solid var(--bg-primary)' }}>
+                  <i className="bx bx-receipt"></i>
+                </div>
               </div>
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>No Purchase History</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '420px', margin: '0 auto 2rem', lineHeight: '1.6' }}>

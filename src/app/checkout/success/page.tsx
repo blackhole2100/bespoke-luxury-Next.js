@@ -370,8 +370,22 @@ export default function CheckoutSuccessPage() {
     <>
       <Header />
       <Suspense fallback={
-        <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <i className="bx bx-loader-alt bx-spin" style={{ fontSize: '2.5rem', color: 'var(--accent)' }}></i>
+        <div style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+          <div style={{ position: 'relative', width: '80px', height: '80px' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo1.png" alt="Loading" className="loading-logo-pulse" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          </div>
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes logoPulse {
+              0% { opacity: 0.4; transform: scale(0.95); }
+              50% { opacity: 1; transform: scale(1.05); }
+              100% { opacity: 0.4; transform: scale(0.95); }
+            }
+            .loading-logo-pulse {
+              animation: logoPulse 1.8s infinite ease-in-out;
+            }
+          `}} />
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Synchronizing invoice...</p>
         </div>
       }>
         <OrderSuccessContent />

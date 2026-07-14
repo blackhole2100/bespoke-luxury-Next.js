@@ -106,7 +106,13 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, start
           {!isCheckingOut ? (
             cart.length === 0 ? (
               <div className="cart-empty">
-                <i className="bx bx-shopping-bag"></i>
+                <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 1.5rem' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/logo1.png" alt="Cart is empty" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.5 }} />
+                  <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', border: '2px solid var(--bg-secondary)' }}>
+                    <i className="bx bx-shopping-bag"></i>
+                  </div>
+                </div>
                 <p>Your cart is empty</p>
                 <button className="btn-primary-solid" style={{ marginTop: '1rem' }} onClick={onClose}>
                   Browse Collection
