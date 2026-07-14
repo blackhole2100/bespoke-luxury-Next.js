@@ -3,9 +3,9 @@ import { AppProvider } from "@/context/AppContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Elegant Furniture Hub | Handcrafted Luxury Living",
-  description: "Elegant Furniture Hub — Luxury handcrafted furniture for the modern home. Explore our exclusive collection of sofas, chairs, and bespoke pieces.",
-  keywords: "elegant furniture hub, luxury furniture, sofas, armchairs, handcrafted, premium furniture",
+  title: "Elegant Furniture Hub | Handcrafted Luxury Living & Bespoke Furniture",
+  description: "Welcome to Elegant Furniture Hub. Explore our exclusive, curated collection of artisanal, handcrafted sofas, lounge chairs, dining tables, and luxury home decor designed for the discerning home.",
+  keywords: "elegant furniture hub, luxury furniture, bespoke sofas, handcrafted dining tables, premium armchairs, SoHo furniture shop",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -45,6 +45,39 @@ export default function RootLayout({
         <AppProvider>
           {children}
         </AppProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FurnitureStore",
+              "name": "Elegant Furniture Hub",
+              "url": "https://elegant-furniture-hub.vercel.app",
+              "logo": "https://elegant-furniture-hub.vercel.app/images/logo1.png",
+              "description": "Elegant Furniture Hub — Luxury handcrafted furniture for the modern home. Explore our exclusive collection of sofas, chairs, and bespoke pieces.",
+              "telephone": "+1-212-555-8934",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "452 West Broadway",
+                "addressLocality": "SoHo, NY",
+                "postalCode": "10012",
+                "addressCountry": "US"
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "10:00",
+                  "closes": "19:00"
+                }
+              ],
+              "sameAs": [
+                "https://www.facebook.com/elegantfurniturehub",
+                "https://twitter.com/elegantfurniture"
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );
