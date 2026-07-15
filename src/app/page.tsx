@@ -378,8 +378,8 @@ export default function Home() {
       <ReviewsCarousel />
 
       {/* 7.5 BOOK A CONSULTATION */}
-      <section style={{ background: 'var(--bg-secondary)', padding: '6rem 2rem' }} id="consultation">
-        <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+      <section className="consultation-section" id="consultation">
+        <div className="consultation-grid">
           {/* Left info panel */}
           <div>
             <span className="section-label">Private Appointment</span>
@@ -408,7 +408,7 @@ export default function Home() {
           </div>
 
           {/* Right booking form */}
-          <div style={{ background: 'var(--bg-primary)', borderRadius: '16px', padding: '2.5rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-md, 0 8px 40px rgba(0,0,0,0.08))' }}>
+          <div className="consultation-form-card">
             {bookingSuccess ? (
               <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.8rem', color: '#16a34a' }}>

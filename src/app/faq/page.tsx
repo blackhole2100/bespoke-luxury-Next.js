@@ -42,58 +42,27 @@ export default function FAQPage() {
   return (
     <>
       <Header />
-      <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', padding: '8rem 2rem 5rem' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.9rem', fontWeight: 600 }}>Support Concierge</span>
-            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', color: 'var(--text-primary)', marginTop: '0.5rem', marginBottom: '1rem' }}>Frequently Asked Questions</h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.6' }}>Find answers to common inquiries about our craftsmanship, delivery options, and customized bespoke furniture services.</p>
+      <main className="faq-main">
+        <div className="faq-card">
+          <div className="faq-header">
+            <span className="faq-label">Support Concierge</span>
+            <h1 className="faq-heading">Frequently Asked Questions</h1>
+            <p className="faq-subtext">Find answers to common inquiries about our craftsmanship, delivery options, and customized bespoke furniture services.</p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+          <div className="faq-list">
             {FAQS.map((faq, idx) => {
               const isOpen = activeIndex === idx;
               return (
-                <div 
-                  key={idx} 
-                  style={{ 
-                    background: 'var(--bg-primary)', 
-                    border: '1px solid var(--border)', 
-                    borderRadius: '8px', 
-                    overflow: 'hidden', 
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  <button 
-                    onClick={() => toggleFAQ(idx)}
-                    style={{ 
-                      width: '100%', 
-                      padding: '20px', 
-                      background: 'none', 
-                      border: 'none', 
-                      textAlign: 'left', 
-                      display: 'flex', 
-                      justifyContent: 'space-between', 
-                      alignItems: 'center', 
-                      cursor: 'pointer',
-                      outline: 'none'
-                    }}
-                  >
-                    <span style={{ fontSize: '1.1rem', fontWeight: 600, color: isOpen ? 'var(--accent)' : 'var(--text-primary)', transition: 'color 0.3s' }}>
+                <div key={idx} className={`faq-item ${isOpen ? 'open' : ''}`}>
+                  <button onClick={() => toggleFAQ(idx)} className="faq-trigger">
+                    <span className="faq-question">
                       {faq.question}
                     </span>
-                    <i 
-                      className={`bx bx-chevron-down`} 
-                      style={{ 
-                        fontSize: '1.5rem', 
-                        color: 'var(--text-secondary)',
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s'
-                      }}
-                    ></i>
+                    <i className="bx bx-chevron-down faq-icon"></i>
                   </button>
                   {isOpen && (
-                    <div style={{ padding: '0 20px 20px', color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.7', borderTop: '1px solid var(--border)', paddingTop: '15px' }}>
+                    <div className="faq-answer">
                       {faq.answer}
                     </div>
                   )}

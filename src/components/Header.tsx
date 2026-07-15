@@ -217,26 +217,22 @@ export const Header: React.FC = () => {
               </li>
               
               {/* User Account / Profile Section in Mobile Drawer */}
-              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '1.25rem', paddingTop: '1.25rem', listStyle: 'none' }}>
+              <li className="mobile-only-action mobile-profile-wrapper">
                 {user ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '0 8px 8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--accent-bg)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.95rem' }}>
+                  <div className="mobile-profile-container">
+                    <div className="mobile-profile-header">
+                      <div className="mobile-profile-avatar">
                         {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, textAlign: 'left' }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {user.name}
-                        </span>
-                        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {user.email}
-                        </span>
+                      <div className="mobile-profile-info">
+                        <span className="mobile-profile-name">{user.name}</span>
+                        <span className="mobile-profile-email">{user.email}</span>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                    <div className="mobile-profile-actions">
                       <Link 
                         href="/orders" 
-                        style={{ flex: 1, padding: '8px 12px', background: 'var(--bg-tertiary)', border: '1px solid var(--border)', color: 'var(--text-primary)', textAlign: 'center', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}
+                        className="mobile-profile-btn orders-btn"
                         onClick={handleNavClick}
                       >
                         <i className="bx bx-receipt"></i> Orders
@@ -246,20 +242,20 @@ export const Header: React.FC = () => {
                           setIsMobileMenuOpen(false);
                           await logout();
                         }}
-                        style={{ flex: 1, padding: '8px 12px', background: 'rgba(220, 53, 69, 0.08)', border: '1px solid rgba(220, 53, 69, 0.15)', color: '#dc3545', textAlign: 'center', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', cursor: 'pointer' }}
+                        className="mobile-profile-btn logout-btn"
                       >
                         <i className="bx bx-log-out"></i> Logout
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div style={{ padding: '0 8px 8px' }}>
+                  <div className="mobile-guest-container">
                     <Link 
                       href="/signup" 
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', padding: '12px', background: 'var(--accent)', color: 'white', borderRadius: '8px', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px' }}
+                      className="mobile-login-btn"
                       onClick={handleNavClick}
                     >
-                      <i className="bx bx-user" style={{ fontSize: '1rem' }}></i>
+                      <i className="bx bx-user"></i>
                       Login / Register
                     </Link>
                   </div>
@@ -267,10 +263,10 @@ export const Header: React.FC = () => {
               </li>
 
               {/* Currency & Theme Toggles inside mobile menu */}
-              <li className="mobile-only-action" style={{ borderTop: '1px solid var(--border)', marginTop: '0.75rem', paddingTop: '1.25rem', listStyle: 'none' }}>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px' }}>
+              <li className="mobile-only-action mobile-settings-wrapper">
+                <div className="mobile-settings-row">
                   {/* Currency Switcher */}
-                  <div className="currency-switcher-mobile-container" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flex: 1 }}>
+                  <div className="mobile-currency-container">
                     <select
                       id="currency-select-mobile"
                       value={currency}
@@ -278,51 +274,26 @@ export const Header: React.FC = () => {
                         setCurrency(e.target.value as Currency);
                         setIsMobileMenuOpen(false);
                       }}
+                      className="mobile-currency-select"
                       aria-label="Select currency mobile"
-                      style={{
-                        width: '100%',
-                        background: 'var(--bg-primary)',
-                        border: '1px solid var(--border)',
-                        borderRadius: '20px',
-                        padding: '8px 32px 8px 16px',
-                        fontSize: '0.8rem',
-                        fontWeight: 700,
-                        color: 'var(--text-primary)',
-                        cursor: 'pointer',
-                        appearance: 'none',
-                        WebkitAppearance: 'none',
-                        outline: 'none',
-                      }}
                     >
                       <option value="INR">₹ INR</option>
                       <option value="USD">$ USD</option>
                       <option value="GBP">£ GBP</option>
                     </select>
-                    <i className="bx bx-chevron-down" style={{ position: 'absolute', right: '12px', pointerEvents: 'none', fontSize: '1rem', color: 'var(--text-muted)' }}></i>
+                    <i className="bx bx-chevron-down mobile-select-icon"></i>
                   </div>
                   
                   {/* Theme Toggle */}
                   <button 
-                    className="icon-btn theme-toggle-mobile" 
+                    className="mobile-theme-btn" 
                     onClick={() => {
                       toggleTheme();
                       setIsMobileMenuOpen(false);
                     }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '50%',
-                      border: '1px solid var(--border)',
-                      background: 'var(--bg-primary)',
-                      color: 'var(--text-primary)',
-                      cursor: 'pointer'
-                    }}
                     aria-label="Toggle theme mobile"
                   >
-                    <i className={`bx ${theme === 'dark' ? 'bx-sun' : 'bx-moon'}`} style={{ fontSize: '1.2rem' }}></i>
+                    <i className={`bx ${theme === 'dark' ? 'bx-sun' : 'bx-moon'}`}></i>
                   </button>
                 </div>
               </li>
