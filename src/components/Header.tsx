@@ -21,6 +21,7 @@ export const Header: React.FC = () => {
   } = useApp();
   
   const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -32,6 +33,50 @@ export const Header: React.FC = () => {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [startAtCheckout, setStartAtCheckout] = useState(false);
+
+  // Track scroll position to update active hash links
+  useEffect(() => {
+    if (pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const handleScrollActiveSection = () => {
+      const scrollPosition = window.scrollY + 140; // trigger active link offset
+
+      // Find the current active section
+      const homeSection = document.getElementById('home');
+      const aboutSection = document.getElementById('about');
+      const productSection = document.getElementById('product');
+      const gallerySection = document.getElementById('gallery');
+      const reviewsSection = document.getElementById('reviews');
+      const contactSection = document.getElementById('contact');
+
+      let currentSection = 'home';
+
+      if (contactSection && scrollPosition >= contactSection.offsetTop) {
+        currentSection = 'contact';
+      } else if (reviewsSection && scrollPosition >= reviewsSection.offsetTop) {
+        currentSection = 'reviews';
+      } else if (gallerySection && scrollPosition >= gallerySection.offsetTop) {
+        currentSection = 'gallery';
+      } else if (productSection && scrollPosition >= productSection.offsetTop) {
+        currentSection = 'product';
+      } else if (aboutSection && scrollPosition >= aboutSection.offsetTop) {
+        currentSection = 'about';
+      } else if (homeSection && scrollPosition >= homeSection.offsetTop) {
+        currentSection = 'home';
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener('scroll', handleScrollActiveSection, { passive: true });
+    // Initial call
+    handleScrollActiveSection();
+
+    return () => window.removeEventListener('scroll', handleScrollActiveSection);
+  }, [pathname]);
 
   // Checkout URL Param handler to open cart sidebar automatically
   useEffect(() => {
@@ -174,37 +219,37 @@ export const Header: React.FC = () => {
             {/* Main Links */}
             <ul>
               <li>
-                <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`} onClick={handleNavClick}>
+                <Link href="/" className={`nav-link ${pathname === '/' && activeSection === 'home' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-home mobile-nav-icon"></i>
                   Home
                 </Link>
               </li>
               <li>
-                <Link href={getNavLink('#about')} className="nav-link" onClick={handleNavClick}>
+                <Link href={getNavLink('#about')} className={`nav-link ${pathname === '/' && activeSection === 'about' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-book-open mobile-nav-icon"></i>
                   Story
                 </Link>
               </li>
               <li>
-                <Link href={getNavLink('#product')} className="nav-link" onClick={handleNavClick}>
+                <Link href={getNavLink('#product')} className={`nav-link ${pathname === '/' && activeSection === 'product' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-grid-alt mobile-nav-icon"></i>
                   Collection
                 </Link>
               </li>
               <li>
-                <Link href={getNavLink('#gallery')} className="nav-link" onClick={handleNavClick}>
+                <Link href={getNavLink('#gallery')} className={`nav-link ${pathname === '/' && activeSection === 'gallery' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-image mobile-nav-icon"></i>
                   Gallery
                 </Link>
               </li>
               <li>
-                <Link href={getNavLink('#reviews')} className="nav-link" onClick={handleNavClick}>
+                <Link href={getNavLink('#reviews')} className={`nav-link ${pathname === '/' && activeSection === 'reviews' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-message-square-detail mobile-nav-icon"></i>
                   Reviews
                 </Link>
               </li>
               <li>
-                <Link href={getNavLink('#contact')} className="nav-link" onClick={handleNavClick}>
+                <Link href={getNavLink('#contact')} className={`nav-link ${pathname === '/' && activeSection === 'contact' ? 'active' : ''}`} onClick={handleNavClick}>
                   <i className="bx bx-envelope mobile-nav-icon"></i>
                   Contact
                 </Link>
