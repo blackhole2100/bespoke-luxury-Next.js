@@ -58,7 +58,7 @@ function OrderSuccessContent() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', padding: '2rem' }}>
+      <div style={{ minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', padding: '9rem 2rem 6rem' }}>
         <div style={{ position: 'relative', width: '70px', height: '70px' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/logo1.png" alt="Loading" className="loading-logo-pulse" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -107,6 +107,8 @@ function OrderSuccessContent() {
           }
           .invoice-header {
             padding: 1.25rem 1.5rem !important;
+            background: white !important;
+            color: black !important;
           }
           .invoice-details {
             padding: 1.25rem 1.5rem !important;
@@ -151,9 +153,9 @@ function OrderSuccessContent() {
       `}</style>
 
       {/* Luxury Brand Greeting Banner */}
-      <div className="no-print success-banner" style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)', padding: '5.5rem 1.5rem 3.5rem', textAlign: 'center' }}>
+      <div className="no-print success-banner" style={{ background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-strong)', padding: '9rem 1.5rem 3.5rem', textAlign: 'center' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <span style={{ textTransform: 'uppercase', letterSpacing: '2.5px', fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent)', display: 'inline-block', marginBottom: '0.75rem', padding: '4px 14px', background: 'var(--accent-bg)', borderRadius: '100px', border: '1px solid rgba(184, 150, 110, 0.2)' }}>
+          <span style={{ textTransform: 'uppercase', letterSpacing: '2.5px', fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent)', display: 'inline-block', marginBottom: '0.75rem', padding: '4px 14px', background: 'var(--accent-bg)', borderRadius: '100px', border: '1px solid rgba(184, 150, 110, 0.25)' }}>
             Commission Registered Successfully
           </span>
           
@@ -229,49 +231,49 @@ function OrderSuccessContent() {
       </div>
 
       {/* Invoice Document Wrapper */}
-      <div className="invoice-container" style={{ maxWidth: '880px', margin: '3rem auto', padding: '0 1.25rem 6rem' }}>
+      <div className="invoice-container" style={{ maxWidth: '880px', margin: '3rem auto', padding: '0 1.25rem 7rem' }}>
         <div className="invoice-wrapper" style={{
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border)',
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-strong)',
           borderRadius: '20px',
           overflow: 'hidden',
-          boxShadow: 'var(--shadow-md)',
+          boxShadow: '0 10px 30px rgba(28, 25, 23, 0.08)',
         }}>
-          {/* Invoice Header */}
-          <div className="invoice-header" style={{ background: 'var(--bg-tertiary)', padding: '2.5rem 3rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.75rem' }}>
+          {/* Invoice Header - Premium Dark Contrast Strip */}
+          <div className="invoice-header" style={{ background: '#1C1917', color: '#FAF9F7', padding: '2.5rem 3rem', borderBottom: '1px solid #332F2B', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.75rem' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/images/logo1.png" alt="Elegant Furniture Hub" style={{ height: '36px', width: 'auto' }} onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                 <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', letterSpacing: '1.5px', fontWeight: 700, color: 'var(--text-primary)' }}>ELEGANT</span>
-                  <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)', fontWeight: 600 }}>Furniture Hub</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', letterSpacing: '1.5px', fontWeight: 700, color: '#FAF9F7' }}>ELEGANT</span>
+                  <span style={{ fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '1px', color: '#D4B896', fontWeight: 700 }}>Furniture Hub</span>
                 </div>
               </div>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '4px 0', fontWeight: 500 }}>452 West Broadway, SoHo, NY 10012</p>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '4px 0', fontWeight: 500 }}>+1 (212) 555-8934 · concierge@royalfurniture.com</p>
+              <p style={{ fontSize: '0.82rem', color: '#D4B896', margin: '4px 0', fontWeight: 600 }}>452 West Broadway, SoHo, NY 10012</p>
+              <p style={{ fontSize: '0.82rem', color: '#D4B896', margin: '4px 0', fontWeight: 600 }}>+1 (212) 555-8934 · concierge@royalfurniture.com</p>
             </div>
             
             <div className="invoice-header-right" style={{ textAlign: 'right' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.2rem', fontWeight: 400, color: 'var(--text-primary)', margin: 0, letterSpacing: '1px' }}>INVOICE</h2>
-              <p style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '0.95rem', margin: '4px 0' }}>#{invoiceNumber}</p>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', margin: '2px 0', fontWeight: 600 }}>Issued: {orderDate}</p>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.2rem', fontWeight: 400, color: '#FAF9F7', margin: 0, letterSpacing: '1px' }}>INVOICE</h2>
+              <p style={{ color: '#E5C49F', fontWeight: 700, fontSize: '0.95rem', margin: '4px 0' }}>#{invoiceNumber}</p>
+              <p style={{ color: '#D4B896', fontSize: '0.82rem', margin: '2px 0', fontWeight: 600 }}>Issued: {orderDate}</p>
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
                 padding: '4px 14px',
                 borderRadius: '100px',
-                background: 'rgba(184,150,110,0.15)',
-                color: 'var(--accent-dark)',
+                background: 'rgba(212, 184, 150, 0.2)',
+                color: '#F3E5D8',
                 fontSize: '0.72rem',
                 fontWeight: 700,
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
                 marginTop: '6px',
-                border: '1px solid rgba(184,150,110,0.3)'
+                border: '1px solid #D4B896'
               }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-dark)' }}></span>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#D4B896' }}></span>
                 {order?.status || 'Confirmed'}
               </span>
             </div>
@@ -306,7 +308,7 @@ function OrderSuccessContent() {
           <div className="invoice-table-wrapper desktop-table-only" style={{ padding: '0 3rem' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1.5rem' }}>
               <thead>
-                <tr style={{ borderBottom: '2px solid var(--border)' }}>
+                <tr style={{ borderBottom: '2px solid var(--border-strong)' }}>
                   <th style={{ padding: '14px 8px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-secondary)', textAlign: 'left' }}>Item Description</th>
                   <th style={{ padding: '14px 8px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-secondary)', textAlign: 'center' }}>Qty</th>
                   <th style={{ padding: '14px 8px', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-secondary)', textAlign: 'right' }}>Unit Value</th>
@@ -321,7 +323,7 @@ function OrderSuccessContent() {
                       <img 
                         src={item.image} 
                         alt={item.name} 
-                        style={{ width: '56px', height: '56px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-secondary)', flexShrink: 0 }}
+                        style={{ width: '56px', height: '56px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border-strong)', background: 'var(--bg-primary)', flexShrink: 0 }}
                         onError={(e) => { (e.target as HTMLImageElement).src = '/images/p1.png'; }}
                       />
                       <div>
@@ -345,7 +347,7 @@ function OrderSuccessContent() {
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {(order?.items || []).map((item, idx) => (
-                <div key={idx} style={{ background: 'var(--bg-secondary)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border)', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <div key={idx} style={{ background: 'var(--bg-primary)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--border-strong)', display: 'flex', gap: '12px', alignItems: 'center' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={item.image} 
@@ -369,7 +371,7 @@ function OrderSuccessContent() {
 
           {/* Totals Summary */}
           <div className="invoice-summary" style={{ padding: '2rem 3rem 2.5rem', display: 'flex', justifyContent: 'flex-end' }}>
-            <div style={{ width: '300px', background: 'var(--bg-tertiary)', padding: '1.25rem 1.5rem', borderRadius: '14px', border: '1px solid var(--border)' }}>
+            <div style={{ width: '300px', background: 'var(--bg-primary)', padding: '1.25rem 1.5rem', borderRadius: '14px', border: '1px solid var(--border-strong)' }}>
               {[
                 { label: 'Subtotal', value: formatPrice(order?.totalAmount || 0) },
                 { label: 'White Glove Transit', value: 'Complimentary' },
@@ -388,7 +390,7 @@ function OrderSuccessContent() {
           </div>
 
           {/* Quality Guarantee Details */}
-          <div className="invoice-guarantee" style={{ background: 'var(--bg-tertiary)', padding: '2rem 3rem', borderTop: '1px solid var(--border)', fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+          <div className="invoice-guarantee" style={{ background: 'var(--bg-primary)', padding: '2rem 3rem', borderTop: '1px solid var(--border)', fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
             <h5 style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-primary)', marginBottom: '8px' }}>
               Artisanal Guarantee & Support
             </h5>
@@ -412,7 +414,7 @@ function OrderSuccessContent() {
           <Link 
             href="/product" 
             className="btn-secondary-outline" 
-            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px 30px', textDecoration: 'none', border: '1.5px solid var(--border-strong)', borderRadius: '10px', color: 'var(--text-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.82rem', background: 'var(--bg-primary)', transition: 'all 0.3s ease' }}
+            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px 30px', textDecoration: 'none', border: '1.5px solid var(--border-strong)', borderRadius: '10px', color: 'var(--text-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.82rem', background: 'var(--bg-secondary)', transition: 'all 0.3s ease' }}
           >
             <i className="bx bx-left-arrow-alt" style={{ fontSize: '1.1rem' }}></i> Return to Shop Catalog
           </Link>
@@ -424,11 +426,11 @@ function OrderSuccessContent() {
       <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 640px) {
           .success-banner {
-            padding: 5rem 1rem 3rem !important;
+            padding: 7.5rem 1rem 3rem !important;
           }
           .invoice-container {
             margin: 1.5rem auto !important;
-            padding: 0 0.75rem 6rem !important;
+            padding: 0 0.75rem 7rem !important;
           }
           .invoice-header {
             padding: 1.5rem 1.25rem !important;
@@ -488,7 +490,7 @@ export default function CheckoutSuccessPage() {
     <>
       <Header />
       <Suspense fallback={
-        <div style={{ minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', padding: '2rem' }}>
+        <div style={{ minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem', padding: '9rem 2rem 6rem' }}>
           <div style={{ position: 'relative', width: '70px', height: '70px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/logo1.png" alt="Loading" className="loading-logo-pulse" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />

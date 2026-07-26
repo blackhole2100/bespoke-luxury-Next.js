@@ -47,7 +47,7 @@ export default function CustomerOrdersPage() {
     return (
       <>
         <Header />
-        <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+        <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '9rem 1.5rem 6rem' }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ position: 'relative', width: '70px', height: '70px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -63,7 +63,7 @@ export default function CustomerOrdersPage() {
                 }
               `}} />
             </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}>Accessing client purchase archives...</p>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 600 }}>Accessing client purchase archives...</p>
           </div>
         </main>
         <Footer />
@@ -76,12 +76,12 @@ export default function CustomerOrdersPage() {
     return (
       <>
         <Header />
-        <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '7rem 1.25rem 5rem' }}>
-          <div style={{ maxWidth: '480px', width: '100%', background: 'var(--bg-primary)', border: '1px solid var(--border)', borderRadius: '20px', padding: '3rem 2rem', textAlign: 'center', boxShadow: 'var(--shadow-md)' }}>
+        <main style={{ minHeight: '80vh', backgroundColor: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '9rem 1.25rem 6rem' }}>
+          <div style={{ maxWidth: '480px', width: '100%', background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '20px', padding: '3rem 2rem', textAlign: 'center', boxShadow: 'var(--shadow-md)' }}>
             <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 1.5rem' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/logo1.png" alt="Access Restructured" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-              <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', border: '2px solid var(--bg-primary)' }}>
+              <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.9rem', border: '2px solid var(--bg-secondary)' }}>
                 <i className="bx bx-lock-alt"></i>
               </div>
             </div>
@@ -107,14 +107,14 @@ export default function CustomerOrdersPage() {
   return (
     <>
       <Header />
-      <main className="orders-page-main" style={{ minHeight: '85vh', backgroundColor: 'var(--bg-secondary)', padding: '7.5rem 1.5rem 6rem' }}>
+      <main className="orders-page-main" style={{ minHeight: '85vh', backgroundColor: 'var(--bg-primary)', padding: '9rem 1.5rem 7rem' }}>
         <div style={{ maxWidth: '1020px', margin: '0 auto' }}>
           
           {/* Header Banner */}
-          <div className="orders-header-banner" style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
+          <div className="orders-header-banner" style={{ marginBottom: '2.5rem', borderBottom: '1px solid var(--border-strong)', paddingBottom: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem' }}>
               <div>
-                <span className="section-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.6rem', padding: '4px 12px', background: 'var(--accent-bg)', borderRadius: '100px', border: '1px solid rgba(184, 150, 110, 0.2)' }}>
+                <span className="section-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.75rem', fontWeight: 700, marginBottom: '0.6rem', padding: '4px 14px', background: 'var(--accent-bg)', borderRadius: '100px', border: '1px solid rgba(184, 150, 110, 0.25)' }}>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)' }}></span>
                   Client Console
                 </span>
@@ -128,14 +128,14 @@ export default function CustomerOrdersPage() {
 
               {/* Order summary stats bar */}
               {orders.length > 0 && (
-                <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
-                  <div style={{ background: 'var(--bg-primary)', padding: '10px 16px', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
-                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)', display: 'block', fontWeight: 600 }}>Commissions</span>
-                    <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{orders.length}</span>
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '10px 18px', borderRadius: '12px', border: '1px solid var(--border-strong)', textAlign: 'center', boxShadow: 'var(--shadow-xs)' }}>
+                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)', display: 'block', fontWeight: 700 }}>Commissions</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)' }}>{orders.length}</span>
                   </div>
-                  <div style={{ background: 'var(--bg-primary)', padding: '10px 16px', borderRadius: '12px', border: '1px solid var(--border)', textAlign: 'center' }}>
-                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)', display: 'block', fontWeight: 600 }}>Total Portfolio</span>
-                    <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent)' }}>{formatPrice(totalCommissionsValue)}</span>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '10px 18px', borderRadius: '12px', border: '1px solid var(--border-strong)', textAlign: 'center', boxShadow: 'var(--shadow-xs)' }}>
+                    <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-secondary)', display: 'block', fontWeight: 700 }}>Total Portfolio</span>
+                    <span style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--accent)' }}>{formatPrice(totalCommissionsValue)}</span>
                   </div>
                 </div>
               )}
@@ -144,11 +144,11 @@ export default function CustomerOrdersPage() {
 
           {/* Orders Content */}
           {orders.length === 0 ? (
-            <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)', borderRadius: '20px', padding: '5rem 2rem', textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-strong)', borderRadius: '20px', padding: '5rem 2rem', textAlign: 'center', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ position: 'relative', width: '84px', height: '84px', margin: '0 auto 1.5rem' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/logo1.png" alt="No Purchases" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.65 }} />
-                <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '30px', height: '30px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.95rem', border: '2px solid var(--bg-primary)' }}>
+                <img src="/images/logo1.png" alt="No Purchases" style={{ width: '100%', height: '100%', objectFit: 'contain', opacity: 0.7 }} />
+                <div style={{ position: 'absolute', bottom: '-4px', right: '-4px', width: '30px', height: '30px', borderRadius: '50%', background: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.95rem', border: '2px solid var(--bg-secondary)' }}>
                   <i className="bx bx-receipt"></i>
                 </div>
               </div>
@@ -158,13 +158,13 @@ export default function CustomerOrdersPage() {
               </p>
               <Link 
                 href="/product" 
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 28px', background: 'var(--accent)', color: 'white', fontWeight: 700, borderRadius: '10px', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.82rem', boxShadow: '0 4px 14px rgba(184, 150, 110, 0.3)' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '13px 30px', background: 'var(--accent)', color: 'white', fontWeight: 700, borderRadius: '10px', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.82rem', boxShadow: '0 4px 14px rgba(184, 150, 110, 0.35)' }}
               >
                 <i className="bx bx-store-alt" style={{ fontSize: '1.1rem' }}></i> Browse Furniture Catalog
               </Link>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2.25rem' }}>
               {orders.map((order) => {
                 const dateString = new Date(order.createdAt!).toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -174,14 +174,14 @@ export default function CustomerOrdersPage() {
                 
                 const status = order.status || 'Pending';
                 
-                // Accessible status styling
-                let statusBadgeStyle = { background: 'rgba(120, 113, 108, 0.12)', color: 'var(--text-primary)', border: '1px solid rgba(120, 113, 108, 0.3)', dotColor: '#78716C' };
+                // High contrast status styling
+                let statusBadgeStyle = { background: 'rgba(251, 191, 36, 0.18)', color: '#FBBF24', border: '1px solid rgba(251, 191, 36, 0.4)', dotColor: '#FBBF24' };
                 if (status === 'Processing') {
-                  statusBadgeStyle = { background: 'rgba(184, 150, 110, 0.15)', color: 'var(--accent-dark)', border: '1px solid rgba(184, 150, 110, 0.35)', dotColor: 'var(--accent-dark)' };
+                  statusBadgeStyle = { background: 'rgba(212, 184, 150, 0.22)', color: '#F3E5D8', border: '1px solid #D4B896', dotColor: '#D4B896' };
                 } else if (status === 'Shipped') {
-                  statusBadgeStyle = { background: 'rgba(37, 99, 235, 0.12)', color: '#1D4ED8', border: '1px solid rgba(37, 99, 235, 0.3)', dotColor: '#1D4ED8' };
+                  statusBadgeStyle = { background: 'rgba(59, 130, 246, 0.25)', color: '#93C5FD', border: '1px solid #60A5FA', dotColor: '#60A5FA' };
                 } else if (status === 'Delivered') {
-                  statusBadgeStyle = { background: 'rgba(5, 150, 105, 0.12)', color: '#047857', border: '1px solid rgba(5, 150, 105, 0.3)', dotColor: '#047857' };
+                  statusBadgeStyle = { background: 'rgba(16, 185, 129, 0.25)', color: '#A7F3D0', border: '1px solid #34D399', dotColor: '#34D399' };
                 }
 
                 return (
@@ -189,29 +189,29 @@ export default function CustomerOrdersPage() {
                     key={order._id}
                     className="order-card-container"
                     style={{ 
-                      background: 'var(--bg-primary)', 
-                      border: '1px solid var(--border)', 
-                      borderRadius: '18px', 
+                      background: 'var(--bg-secondary)', 
+                      border: '1px solid var(--border-strong)', 
+                      borderRadius: '20px', 
                       overflow: 'hidden', 
-                      boxShadow: 'var(--shadow-sm)',
+                      boxShadow: '0 10px 30px rgba(28, 25, 23, 0.07)',
                       transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease'
                     }}
                   >
                     
-                    {/* Card Top Information Bar */}
-                    <div className="order-card-header" style={{ background: 'var(--bg-tertiary)', padding: '1.25rem 1.75rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                    {/* Card Top Information Bar - Premium Dark Contrast Strip */}
+                    <div className="order-card-header" style={{ background: '#1C1917', color: '#FAF9F7', padding: '1.25rem 1.75rem', borderBottom: '1px solid #332F2B', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                       <div className="order-header-info-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1.5rem', flex: 1, minWidth: 0 }}>
                         <div>
-                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-secondary)', display: 'block', marginBottom: '3px', fontWeight: 600 }}>Date Placed</span>
-                          <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>{dateString}</span>
+                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#D4B896', display: 'block', marginBottom: '3px', fontWeight: 700 }}>Date Placed</span>
+                          <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#FAF9F7' }}>{dateString}</span>
                         </div>
                         <div>
-                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-secondary)', display: 'block', marginBottom: '3px', fontWeight: 600 }}>Total Invoiced</span>
-                          <span style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--accent)' }}>{formatPrice(order.totalAmount)}</span>
+                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#D4B896', display: 'block', marginBottom: '3px', fontWeight: 700 }}>Total Invoiced</span>
+                          <span style={{ fontSize: '0.98rem', fontWeight: 700, color: '#E5C49F' }}>{formatPrice(order.totalAmount)}</span>
                         </div>
                         <div>
-                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-secondary)', display: 'block', marginBottom: '3px', fontWeight: 600 }}>Order Reference</span>
-                          <code style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)', background: 'rgba(0,0,0,0.04)', padding: '2px 6px', borderRadius: '4px' }}>
+                          <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#D4B896', display: 'block', marginBottom: '3px', fontWeight: 700 }}>Order Reference</span>
+                          <code style={{ fontSize: '0.88rem', fontWeight: 700, color: '#FFFFFF', background: 'rgba(255,255,255,0.12)', padding: '3px 8px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)' }}>
                             #{order._id?.slice(-8).toUpperCase()}
                           </code>
                         </div>
@@ -253,7 +253,7 @@ export default function CustomerOrdersPage() {
                               paddingBottom: idx < order.items.length - 1 ? '1.25rem' : 0
                             }}
                           >
-                            <div className="order-item-thumb" style={{ width: '68px', height: '68px', borderRadius: '10px', border: '1px solid var(--border)', background: 'var(--bg-secondary)', overflow: 'hidden', flexShrink: 0 }}>
+                            <div className="order-item-thumb" style={{ width: '72px', height: '72px', borderRadius: '10px', border: '1px solid var(--border-strong)', background: 'var(--bg-primary)', overflow: 'hidden', flexShrink: 0 }}>
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img 
                                 src={item.image} 
@@ -264,10 +264,10 @@ export default function CustomerOrdersPage() {
                             </div>
                             
                             <div className="order-item-details" style={{ flex: 1, minWidth: 0 }}>
-                              <h4 style={{ margin: '0 0 4px', fontSize: '1.02rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: '1.3' }}>
+                              <h4 style={{ margin: '0 0 4px', fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: '1.3' }}>
                                 {item.name}
                               </h4>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
                                 <span>Quantity: <strong style={{ color: 'var(--text-primary)' }}>{item.quantity}</strong></span>
                                 <span>·</span>
                                 <span>{formatPrice(item.price)} each</span>
@@ -275,8 +275,8 @@ export default function CustomerOrdersPage() {
                             </div>
 
                             <div className="order-item-total" style={{ textAlign: 'right', flexShrink: 0 }}>
-                              <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 600 }}>Row Total</span>
-                              <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem' }}>
+                              <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-secondary)', fontWeight: 700 }}>Row Total</span>
+                              <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
                                 {formatPrice(item.price * item.quantity)}
                               </span>
                             </div>
@@ -293,15 +293,15 @@ export default function CustomerOrdersPage() {
                             display: 'inline-flex', 
                             alignItems: 'center', 
                             gap: '8px', 
-                            padding: '11px 22px', 
-                            border: '1.5px solid var(--accent)', 
-                            color: 'var(--accent)', 
+                            padding: '12px 26px', 
+                            background: 'var(--accent)', 
+                            color: '#FFFFFF', 
                             fontWeight: 700, 
                             borderRadius: '10px', 
-                            fontSize: '0.8rem',
+                            fontSize: '0.82rem',
                             textTransform: 'uppercase',
                             letterSpacing: '0.08em',
-                            background: 'transparent',
+                            boxShadow: '0 4px 14px rgba(184, 150, 110, 0.3)',
                             transition: 'all 0.3s ease',
                           }}
                         >
@@ -322,23 +322,22 @@ export default function CustomerOrdersPage() {
       </main>
       <Footer />
       
-      {/* Dynamic hover styles injection */}
+      {/* Dynamic responsive & hover styles */}
       <style dangerouslySetInnerHTML={{ __html: `
         .order-card-container:hover {
           transform: translateY(-3px) !important;
-          box-shadow: var(--shadow-md) !important;
+          box-shadow: 0 16px 36px rgba(28, 25, 23, 0.12) !important;
         }
         .track-invoice-btn:hover {
-          background: var(--accent) !important;
-          color: white !important;
-          box-shadow: 0 4px 12px rgba(184, 150, 110, 0.25) !important;
+          background: var(--accent-dark) !important;
+          box-shadow: 0 6px 18px rgba(184, 150, 110, 0.45) !important;
         }
         @media (max-width: 640px) {
           .orders-page-main {
-            padding: 5.5rem 1rem 4rem !important;
+            padding: 8.5rem 1rem 7rem !important;
           }
           .order-card-header {
-            padding: 1rem 1.25rem !important;
+            padding: 1.25rem 1.25rem !important;
             flex-direction: column !important;
             align-items: flex-start !important;
           }
@@ -357,8 +356,8 @@ export default function CustomerOrdersPage() {
             align-items: flex-start !important;
           }
           .order-item-thumb {
-            width: 56px !important;
-            height: 56px !important;
+            width: 58px !important;
+            height: 58px !important;
           }
           .order-item-total {
             text-align: left !important;
