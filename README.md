@@ -157,7 +157,7 @@ The frontend uses Next.js App Router routes:
 ### 1. Clone & Clean
 Clone the repository and install the dependencies:
 ```bash
-git clone https://github.com/Abdurrehman510/Elegant-Furniture-Hub.git
+git clone https://github.com/kevin9881123/bespoke-luxury-Next.js.git
 cd Elegant-Furniture-Hub
 npm install
 ```
